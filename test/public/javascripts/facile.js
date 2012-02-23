@@ -1,5 +1,5 @@
 (function() {
-  var bindArray, bindObject, bindValue;
+  var bindArray, bindData, bindObject, bindValue;
 
   bindArray = function($html, key, value) {
     var $clone, $original, arrayValue, _i, _len;
@@ -29,12 +29,22 @@
   };
 
   bindValue = function($html, key, value) {
+    var $byId;
+    $byId = $html.find('#' + key);
+    if ($byId.length > 0) {
+      return $byId.html(value);
+    } else {
+      return $html.find('.' + key).html(value);
+    }
+  };
+
+  bindData = function($html, key, value) {
     if (value.constructor === Array) {
       return bindArray($html, key, value);
     } else if (value.constructor === Object) {
       return bindObject($html.find('#' + key), key, value);
     } else {
-      return $html.find('#' + key).html(value);
+      return bindValue($html, key, value);
     }
   };
 
@@ -44,7 +54,7 @@
     for (key in data) {
       value = data[key];
       if (value != null) {
-        bindValue($html, key, value);
+        bindData($html, key, value);
       } else {
         $html.find('#' + key).remove();
       }

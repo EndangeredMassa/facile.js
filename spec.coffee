@@ -33,3 +33,9 @@ describe 'facile', ->
     result = facile(template, data)
     expect(result).toBe('<div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div>')
 
+  it 'looks for class if id does not exist', ->
+    template = '<div class="dog" />'
+    data = {dog: 'woof'}
+    result = facile(template, data)
+    expect(result).toBe('<div class="dog">woof</div>')
+

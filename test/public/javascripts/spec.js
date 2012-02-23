@@ -40,7 +40,7 @@
       result = facile(template, data);
       return expect(result).toBe('<div id="dog" data-age="3">woof</div>');
     });
-    return it('binds array of objects', function() {
+    it('binds array of objects', function() {
       var data, result, template;
       template = '<div class="dog" />';
       data = {
@@ -56,6 +56,15 @@
       };
       result = facile(template, data);
       return expect(result).toBe('<div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div>');
+    });
+    return it('looks for class if id does not exist', function() {
+      var data, result, template;
+      template = '<div class="dog" />';
+      data = {
+        dog: 'woof'
+      };
+      result = facile(template, data);
+      return expect(result).toBe('<div class="dog">woof</div>');
     });
   });
 
