@@ -40,7 +40,7 @@
       result = facile(template, data);
       return expect(result).toBe('<div id="dog" data-age="3">woof</div>');
     });
-    it('binds array of objects', function() {
+    it('binds array of value objects', function() {
       var data, result, template;
       template = '<div class="dog" />';
       data = {
@@ -57,7 +57,7 @@
       result = facile(template, data);
       return expect(result).toBe('<div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div>');
     });
-    return it('looks for class if id does not exist', function() {
+    it('looks for class if id does not exist', function() {
       var data, result, template;
       template = '<div class="dog" />';
       data = {
@@ -65,6 +65,22 @@
       };
       result = facile(template, data);
       return expect(result).toBe('<div class="dog">woof</div>');
+    });
+    return it('binds arrays of binding objects', function() {
+      var data, expectedHtml, result, template;
+      template = '<div class="order"><div class="name" /></div>';
+      data = {
+        order: [
+          {
+            name: 'cool order'
+          }, {
+            name: 'lame order'
+          }
+        ]
+      };
+      result = facile(template, data);
+      expectedHtml = '<div class="order"><div class="name">cool order</div></div><div class="order"><div class="name">lame order</div></div>';
+      return expect(result).toBe(expectedHtml);
     });
   });
 

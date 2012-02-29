@@ -1,4 +1,3 @@
-
 bindArray = ($html, key, value) ->
   $original = $html.find('.'+key)
   for arrayValue in value
@@ -10,10 +9,20 @@ bindArray = ($html, key, value) ->
     $original.before($clone)
   $original.remove()
 
-bindObject = ($html, key, value) ->
+bindBindingObject = ($html, key, value) ->
+  for attr, attrValue of value
+    bindValue($html, attr, attrValue)
+
+bindValueObject = ($html, key, value) ->
   $html.html(value.value)
   for attr, attrValue of value when attr != 'value'
     $html.attr(attr, attrValue)
+
+bindObject = ($html, key, value) ->
+  if value.value?
+    bindValueObject($html, key, value)
+  else
+    bindBindingObject($html, key, value)
 
 bindValue = ($html, key, value) ->
   $byId = $html.find('#'+key)

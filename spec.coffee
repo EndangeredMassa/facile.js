@@ -23,7 +23,7 @@ describe 'facile', ->
     result = facile(template, data)
     expect(result).toBe('<div id="dog" data-age="3">woof</div>')
   
-  it 'binds array of objects', ->
+  it 'binds array of value objects', ->
     template = '<div class="dog" />'
     data =
       dog: [
@@ -38,4 +38,15 @@ describe 'facile', ->
     data = {dog: 'woof'}
     result = facile(template, data)
     expect(result).toBe('<div class="dog">woof</div>')
+
+  it 'binds arrays of binding objects', ->
+    template = '<div class="order"><div class="name" /></div>'
+    data =
+      order: [
+        { name: 'cool order' }
+        { name: 'lame order' }
+      ]
+    result = facile(template, data)
+    expectedHtml = '<div class="order"><div class="name">cool order</div></div><div class="order"><div class="name">lame order</div></div>'
+    expect(result).toBe(expectedHtml)
 
