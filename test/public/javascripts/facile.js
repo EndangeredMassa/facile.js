@@ -75,6 +75,7 @@
         bindData($html, key, value);
       } else {
         $html.find('#' + key).remove();
+        $html.find('.' + key).remove();
       }
     }
     return $html.html();

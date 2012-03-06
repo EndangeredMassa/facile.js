@@ -19,9 +19,18 @@
       result = facile(template, data);
       return expect(result).toBe('<div class="dog">woof</div><div class="dog">bark</div>');
     });
-    it('binds nulls and removes element', function() {
+    it('binds nulls and removes element by id', function() {
       var data, result, template;
       template = '<div id="dog" />';
+      data = {
+        dog: null
+      };
+      result = facile(template, data);
+      return expect(result).toBe('');
+    });
+    it('binds nulls and removes element by class', function() {
+      var data, result, template;
+      template = '<div class="dog" />';
       data = {
         dog: null
       };

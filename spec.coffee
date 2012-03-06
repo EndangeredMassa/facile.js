@@ -11,8 +11,14 @@ describe 'facile', ->
     result = facile(template, data)
     expect(result).toBe('<div class="dog">woof</div><div class="dog">bark</div>')
 
-  it 'binds nulls and removes element', ->
+  it 'binds nulls and removes element by id', ->
     template = '<div id="dog" />'
+    data = {dog: null}
+    result = facile(template, data)
+    expect(result).toBe('')
+
+  it 'binds nulls and removes element by class', ->
+    template = '<div class="dog" />'
     data = {dog: null}
     result = facile(template, data)
     expect(result).toBe('')

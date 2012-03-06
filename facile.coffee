@@ -46,6 +46,7 @@ window.facile = (html, data) ->
       bindData($html, key, value)
     else
       $html.find('#'+key).remove()
+      $html.find('.'+key).remove()
       
   $html.html()
 
