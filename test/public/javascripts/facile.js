@@ -4,6 +4,7 @@
   bindArray = function($html, key, value) {
     var $clone, $original, arrayValue, _i, _len;
     $original = $html.find('.' + key);
+    if ($original.is('table')) $original = $original.find('tbody tr');
     for (_i = 0, _len = value.length; _i < _len; _i++) {
       arrayValue = value[_i];
       $clone = $original.clone();

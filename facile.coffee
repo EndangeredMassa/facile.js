@@ -1,5 +1,7 @@
 bindArray = ($html, key, value) ->
   $original = $html.find('.'+key)
+  if $original.is('table')
+    $original = $original.find('tbody tr')
   for arrayValue in value
     $clone = $original.clone()
     if arrayValue.constructor == Object

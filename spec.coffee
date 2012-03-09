@@ -56,3 +56,14 @@ describe 'facile', ->
     expectedHtml = '<div class="order"><div class="name">cool order</div></div><div class="order"><div class="name">lame order</div></div>'
     expect(result).toBe(expectedHtml)
 
+  it 'binds to table rows', ->
+    template = '<table class="order"><thead><tr><td>Orders</td></tr></thead><tbody><tr><td class="name" /></tr></tbody></table>'
+    data =
+      order: [
+        { name: 'cool order' }
+        { name: 'lame order' }
+      ]
+    result = facile(template, data)
+    expectedHtml = '<table class="order"><thead><tr><td>Orders</td></tr></thead><tbody><tr><td class="name">cool order</td></tr><tr><td class="name">lame order</td></tr></tbody></table>'
+    expect(result).toBe(expectedHtml)
+
