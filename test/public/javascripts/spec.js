@@ -49,6 +49,18 @@
       result = facile(template, data);
       return expect(result).toBe('<div id="dog" data-age="3">woof</div>');
     });
+    it('binds objects via classes', function() {
+      var data, result, template;
+      template = '<div class="dog" />';
+      data = {
+        dog: {
+          value: 'woof',
+          'data-age': 3
+        }
+      };
+      result = facile(template, data);
+      return expect(result).toBe('<div class="dog" data-age="3">woof</div>');
+    });
     it('binds array of value objects', function() {
       var data, result, template;
       template = '<div class="dog" />';

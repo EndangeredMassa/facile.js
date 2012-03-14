@@ -58,10 +58,13 @@
   };
 
   bindData = function($html, key, value) {
+    var $target;
     if (value.constructor === Array) {
       return bindArray($html, key, value);
     } else if (value.constructor === Object) {
-      return bindObject($html.find('#' + key), key, value);
+      $target = $html.find('#' + key);
+      if ($target.length === 0) $target = $html.find('.' + key);
+      return bindObject($target, key, value);
     } else {
       return bindValue($html, key, value);
     }

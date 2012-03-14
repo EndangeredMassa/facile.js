@@ -37,7 +37,9 @@ bindData = ($html, key, value) ->
   if value.constructor == Array
     bindArray($html, key, value)
   else if value.constructor == Object
-    bindObject($html.find('#'+key), key, value)
+    $target = $html.find('#'+key)
+    $target = $html.find('.'+key) if $target.length == 0
+    bindObject($target, key, value)
   else
     bindValue($html, key, value)
 
@@ -51,7 +53,3 @@ window.facile = (html, data) ->
       $html.find('.'+key).remove()
       
   $html.html()
-
-
-
-
