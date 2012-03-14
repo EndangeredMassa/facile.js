@@ -29,6 +29,12 @@ describe 'facile', ->
     result = facile(template, data)
     expect(result).toBe('<div id="dog" data-age="3">woof</div>')
   
+  it 'binds objects via classes', ->
+    template = '<div class="dog" />'
+    data = {dog: {value: 'woof', 'data-age': 3} }
+    result = facile(template, data)
+    expect(result).toBe('<div class="dog" data-age="3">woof</div>')
+
   it 'binds array of value objects', ->
     template = '<div class="dog" />'
     data =
