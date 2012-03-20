@@ -1,5 +1,5 @@
 (function() {
-  var bindArray, bindBindingObject, bindData, bindObject, bindValue, bindValueObject;
+  var bindArray, bindBindingObject, bindData, bindObject, bindValue, bindValueObject, combineClasses;
 
   bindArray = function($html, key, value) {
     var $clone, $original, arrayValue, _i, _len;
@@ -34,9 +34,23 @@
     _results = [];
     for (attr in value) {
       attrValue = value[attr];
-      if (attr !== 'value') _results.push($html.attr(attr, attrValue));
+      if (attr !== 'value') {
+        if (attr === 'class') {
+          _results.push($html.attr('class', combineClasses($html.attr('class'), attrValue)));
+        } else {
+          _results.push($html.attr(attr, attrValue));
+        }
+      }
     }
     return _results;
+  };
+
+  combineClasses = function(existingClasses, newClasses) {
+    if (existingClasses) {
+      return "" + existingClasses + " " + newClasses;
+    } else {
+      return newClasses;
+    }
   };
 
   bindObject = function($html, key, value) {
