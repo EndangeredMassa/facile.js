@@ -18,7 +18,17 @@ bindBindingObject = ($html, key, value) ->
 bindValueObject = ($html, key, value) ->
   $html.html(value.value)
   for attr, attrValue of value when attr != 'value'
-    $html.attr(attr, attrValue)
+    if attr == 'class'
+      $html.attr('class', combineClasses($html.attr('class'), attrValue))
+    else
+      $html.attr(attr, attrValue)
+
+combineClasses = (existingClasses, newClasses) ->
+  if existingClasses
+    "#{existingClasses} #{newClasses}"
+  else
+    newClasses
+
 
 bindObject = ($html, key, value) ->
   if value.value?

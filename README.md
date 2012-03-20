@@ -20,3 +20,4 @@ Running the tests
 1. Install node, npm, coffee-script
 1. ./coffee -> to watch/recompile coffee
 1. node test
+1. http://localhost:5000

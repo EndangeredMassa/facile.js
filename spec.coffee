@@ -35,6 +35,18 @@ describe 'facile', ->
     result = facile(template, data)
     expect(result).toBe('<div class="dog" data-age="3">woof</div>')
 
+  it 'appends extra classes to objects bound via classes', ->
+    template = '<div class="dog" />'
+    data = {dog: {value: 'woof', 'class': 'spaniel'} }
+    result = facile(template, data)
+    expect(result).toBe('<div class="dog spaniel">woof</div>')
+
+  it 'saves classes to objects bound via ids', ->
+    template = '<div id="dog" />'
+    data = {dog: {value: 'woof', 'class': 'spaniel'} }
+    result = facile(template, data)
+    expect(result).toBe('<div id="dog" class="spaniel">woof</div>')
+
   it 'binds array of value objects', ->
     template = '<div class="dog" />'
     data =
@@ -72,4 +84,3 @@ describe 'facile', ->
     result = facile(template, data)
     expectedHtml = '<table class="order"><thead><tr><td>Orders</td></tr></thead><tbody><tr><td class="name">cool order</td></tr><tr><td class="name">lame order</td></tr></tbody></table>'
     expect(result).toBe(expectedHtml)
-
