@@ -13,7 +13,7 @@ bindArray = ($html, key, value) ->
 
 bindBindingObject = ($html, key, value) ->
   for attr, attrValue of value
-    bindValue($html, attr, attrValue)
+    bindData($html, attr, attrValue)
 
 bindValueObject = ($html, key, value) ->
   $html.html(value.value)
@@ -61,5 +61,5 @@ window.facile = (html, data) ->
     else
       $html.find('#'+key).remove()
       $html.find('.'+key).remove()
-      
+
   $html.html()
