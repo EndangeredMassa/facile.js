@@ -28,7 +28,7 @@ describe 'facile', ->
     data = {dog: {value: 'woof', 'data-age': 3} }
     result = facile(template, data)
     expect(result).toBe('<div id="dog" data-age="3">woof</div>')
-  
+
   it 'binds objects via classes', ->
     template = '<div class="dog" />'
     data = {dog: {value: 'woof', 'data-age': 3} }
@@ -84,3 +84,16 @@ describe 'facile', ->
     result = facile(template, data)
     expectedHtml = '<table class="order"><thead><tr><td>Orders</td></tr></thead><tbody><tr><td class="name">cool order</td></tr><tr><td class="name">lame order</td></tr></tbody></table>'
     expect(result).toBe(expectedHtml)
+
+  it 'binds nested value objects', ->
+    template = '<div class="order"><div class="name"><div class="place" /></div></div>'
+    data =
+      order: [
+        name:
+          value: 'over there'
+          place: 'cool order'
+      ]
+    result = facile(template, data)
+    expectedHtml = '<div class="order"><div class="name" place="cool order">over there</div></div>'
+    expect(result).toBe(expectedHtml)
+

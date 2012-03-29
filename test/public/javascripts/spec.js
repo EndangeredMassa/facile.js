@@ -127,7 +127,7 @@
       expectedHtml = '<div class="order"><div class="name">cool order</div></div><div class="order"><div class="name">lame order</div></div>';
       return expect(result).toBe(expectedHtml);
     });
-    return it('binds to table rows', function() {
+    it('binds to table rows', function() {
       var data, expectedHtml, result, template;
       template = '<table class="order"><thead><tr><td>Orders</td></tr></thead><tbody><tr><td class="name" /></tr></tbody></table>';
       data = {
@@ -141,6 +141,23 @@
       };
       result = facile(template, data);
       expectedHtml = '<table class="order"><thead><tr><td>Orders</td></tr></thead><tbody><tr><td class="name">cool order</td></tr><tr><td class="name">lame order</td></tr></tbody></table>';
+      return expect(result).toBe(expectedHtml);
+    });
+    return it('binds nested value objects', function() {
+      var data, expectedHtml, result, template;
+      template = '<div class="order"><div class="name"><div class="place" /></div></div>';
+      data = {
+        order: [
+          {
+            name: {
+              value: 'over there',
+              place: 'cool order'
+            }
+          }
+        ]
+      };
+      result = facile(template, data);
+      expectedHtml = '<div class="order"><div class="name" place="cool order">over there</div></div>';
       return expect(result).toBe(expectedHtml);
     });
   });

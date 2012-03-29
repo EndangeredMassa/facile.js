@@ -23,7 +23,7 @@
     _results = [];
     for (attr in value) {
       attrValue = value[attr];
-      _results.push(bindValue($html, attr, attrValue));
+      _results.push(bindData($html, attr, attrValue));
     }
     return _results;
   };
