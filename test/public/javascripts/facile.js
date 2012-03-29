@@ -1,5 +1,5 @@
 (function() {
-  var bindArray, bindBindingObject, bindData, bindObject, bindValue, bindValueObject, combineClasses;
+  var bindArray, bindBindingObject, bindData, bindNullableData, bindObject, bindValue, bindValueObject, combineClasses;
 
   bindArray = function($html, key, value) {
     var $clone, $original, arrayValue, _i, _len;
@@ -23,7 +23,7 @@
     _results = [];
     for (attr in value) {
       attrValue = value[attr];
-      _results.push(bindData($html, attr, attrValue));
+      _results.push(bindNullableData($html, attr, attrValue));
     }
     return _results;
   };
@@ -84,17 +84,21 @@
     }
   };
 
+  bindNullableData = function($html, key, value) {
+    if (value != null) {
+      return bindData($html, key, value);
+    } else {
+      $html.find('#' + key).remove();
+      return $html.find('.' + key).remove();
+    }
+  };
+
   window.facile = function(html, data) {
     var $html, key, value;
     $html = $('<div />').append($(html));
     for (key in data) {
       value = data[key];
-      if (value != null) {
-        bindData($html, key, value);
-      } else {
-        $html.find('#' + key).remove();
-        $html.find('.' + key).remove();
-      }
+      bindNullableData($html, key, value);
     }
     return $html.html();
   };

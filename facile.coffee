@@ -13,7 +13,7 @@ bindArray = ($html, key, value) ->
 
 bindBindingObject = ($html, key, value) ->
   for attr, attrValue of value
-    bindData($html, attr, attrValue)
+    bindNullableData($html, attr, attrValue)
 
 bindValueObject = ($html, key, value) ->
   $html.html(value.value)
@@ -28,7 +28,6 @@ combineClasses = (existingClasses, newClasses) ->
     "#{existingClasses} #{newClasses}"
   else
     newClasses
-
 
 bindObject = ($html, key, value) ->
   if value.value?
@@ -53,13 +52,16 @@ bindData = ($html, key, value) ->
   else
     bindValue($html, key, value)
 
+bindNullableData = ($html, key, value) ->
+  if value?
+    bindData($html, key, value)
+  else
+    $html.find('#'+key).remove()
+    $html.find('.'+key).remove()
+
 window.facile = (html, data) ->
   $html = $('<div />').append($(html))
   for key, value of data
-    if value?
-      bindData($html, key, value)
-    else
-      $html.find('#'+key).remove()
-      $html.find('.'+key).remove()
+    bindNullableData($html, key, value)
 
   $html.html()
