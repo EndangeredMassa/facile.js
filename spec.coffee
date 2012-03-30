@@ -11,48 +11,6 @@ describe 'facile', ->
       data = {dog: 'woof'}
       result = facile(template, data)
       expect(result).toBe('<div class="dog">woof</div>')
-    
-  describe 'binds objects', ->
-    it 'to ids', ->
-      template = '<div id="dog" />'
-      data = {dog: {value: 'woof', 'data-age': 3} }
-      result = facile(template, data)
-      expect(result).toBe('<div id="dog" data-age="3">woof</div>')
-
-    it 'to classes', ->
-      template = '<div class="dog" />'
-      data = {dog: {value: 'woof', 'data-age': 3} }
-      result = facile(template, data)
-      expect(result).toBe('<div class="dog" data-age="3">woof</div>')
-
-    it 'that are nested', ->
-      template = '<div class="order"><div class="name"><div class="place" /></div></div>'
-      data =
-        order: [
-          name:
-            value: 'over there'
-            place: 'cool order'
-        ]
-      result = facile(template, data)
-      expectedHtml = '<div class="order"><div class="name" place="cool order">over there</div></div>'
-      expect(result).toBe(expectedHtml)
-
-  describe 'binding arrays', ->
-    it 'of simple values', ->
-      template = '<div class="dog" />'
-      data = {dog: ['woof', 'bark']}
-      result = facile(template, data)
-      expect(result).toBe('<div class="dog">woof</div><div class="dog">bark</div>')
-    
-    it 'of value objects', ->
-      template = '<div class="dog" />'
-      data =
-        dog: [
-          {value: 'woof', 'data-age': 3}
-          {value: 'bark', 'data-peak': 27}
-        ]
-      result = facile(template, data)
-      expect(result).toBe('<div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div>')
 
     it 'of binding objects', ->
       template = '<div class="order"><div class="name" /></div>'
@@ -88,28 +46,28 @@ describe 'facile', ->
       data = {dog: null}
       result = facile(template, data)
       expect(result).toBe('')
-  
-  it 'bug: support nested nulls', ->
-    template = '<div class="order"><div class="name"><div class="place" /></div></div>'
-    data =
-      order: [
-        name:
-          place: null
-      ]
-    result = facile(template, data)
-    expectedHtml = '<div class="order"><div class="name"></div></div>'
-    expect(result).toBe(expectedHtml)
+
+    it 'when they are nested', ->
+      template = '<div class="order"><div class="name"><div class="place" /></div></div>'
+      data =
+        order: [
+          name:
+            place: null
+        ]
+      result = facile(template, data)
+      expectedHtml = '<div class="order"><div class="name"></div></div>'
+      expect(result).toBe(expectedHtml)
 
   describe 'appends classes', ->
     it 'to objects bound via classes', ->
       template = '<div class="dog" />'
-      data = {dog: {value: 'woof', 'class': 'spaniel'} }
+      data = {dog: {content: 'woof', 'class': 'spaniel'} }
       result = facile(template, data)
       expect(result).toBe('<div class="dog spaniel">woof</div>')
 
     it 'to objects bound via ids', ->
       template = '<div id="dog" />'
-      data = {dog: {value: 'woof', 'class': 'spaniel'} }
+      data = {dog: {content: 'woof', 'class': 'spaniel'} }
       result = facile(template, data)
       expect(result).toBe('<div id="dog" class="spaniel">woof</div>')
 

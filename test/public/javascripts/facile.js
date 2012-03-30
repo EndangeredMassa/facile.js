@@ -1,5 +1,5 @@
 (function() {
-  var bindArray, bindBindingObject, bindData, bindNullableData, bindObject, bindValue, bindValueObject, combineClasses;
+  var bindArray, bindBindingObject, bindContentObject, bindData, bindNullableData, bindObject, bindValue, combineClasses;
 
   bindArray = function($html, key, value) {
     var $clone, $original, arrayValue, _i, _len;
@@ -28,13 +28,13 @@
     return _results;
   };
 
-  bindValueObject = function($html, key, value) {
+  bindContentObject = function($html, key, value) {
     var attr, attrValue, _results;
-    $html.html(value.value);
+    $html.html(value.content);
     _results = [];
     for (attr in value) {
       attrValue = value[attr];
-      if (attr !== 'value') {
+      if (attr !== 'content') {
         if (attr === 'class') {
           _results.push($html.attr('class', combineClasses($html.attr('class'), attrValue)));
         } else {
@@ -54,8 +54,8 @@
   };
 
   bindObject = function($html, key, value) {
-    if (value.value != null) {
-      return bindValueObject($html, key, value);
+    if (value.content != null) {
+      return bindContentObject($html, key, value);
     } else {
       return bindBindingObject($html, key, value);
     }
