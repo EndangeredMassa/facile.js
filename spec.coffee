@@ -34,6 +34,48 @@ describe 'facile', ->
       expectedHtml = '<table class="order"><thead><tr><td>Orders</td></tr></thead><tbody><tr><td class="name">cool order</td></tr><tr><td class="name">lame order</td></tr></tbody></table>'
       expect(result).toBe(expectedHtml)
 
+  describe 'binds objects', ->
+    it 'to ids', ->
+      template = '<div id="dog" />'
+      data = {dog: {content: 'woof', 'data-age': 3} }
+      result = facile(template, data)
+      expect(result).toBe('<div id="dog" data-age="3">woof</div>')
+
+    it 'to classes', ->
+      template = '<div class="dog" />'
+      data = {dog: {content: 'woof', 'data-age': 3} }
+      result = facile(template, data)
+      expect(result).toBe('<div class="dog" data-age="3">woof</div>')
+
+    it 'that are nested', ->
+      template = '<div class="order"><div class="name"><div class="place" /></div></div>'
+      data =
+        order: [
+          name:
+            content: 'over there'
+            place: 'cool order'
+        ]
+      result = facile(template, data)
+      expectedHtml = '<div class="order"><div class="name" place="cool order">over there</div></div>'
+      expect(result).toBe(expectedHtml)
+
+  describe 'binding arrays', ->
+    it 'of simple values', ->
+      template = '<div class="dog" />'
+      data = {dog: ['woof', 'bark']}
+      result = facile(template, data)
+      expect(result).toBe('<div class="dog">woof</div><div class="dog">bark</div>')
+
+    it 'of content objects', ->
+      template = '<div class="dog" />'
+      data =
+        dog: [
+          {content: 'woof', 'data-age': 3}
+          {content: 'bark', 'data-peak': 27}
+        ]
+      result = facile(template, data)
+      expect(result).toBe('<div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div>')
+
   describe 'binds nulls', ->
     it 'by removing elements by id', ->
       template = '<div id="dog" />'
