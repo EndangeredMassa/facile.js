@@ -11,7 +11,7 @@
         result = facile(template, data);
         return expect(result).toBe('<div id="dog">woof</div>');
       });
-      return it('to classes if id does not exist', function() {
+      it('to classes if id does not exist', function() {
         var data, result, template;
         template = '<div class="dog" />';
         data = {
@@ -19,77 +19,6 @@
         };
         result = facile(template, data);
         return expect(result).toBe('<div class="dog">woof</div>');
-      });
-    });
-    describe('binds objects', function() {
-      it('to ids', function() {
-        var data, result, template;
-        template = '<div id="dog" />';
-        data = {
-          dog: {
-            value: 'woof',
-            'data-age': 3
-          }
-        };
-        result = facile(template, data);
-        return expect(result).toBe('<div id="dog" data-age="3">woof</div>');
-      });
-      it('to classes', function() {
-        var data, result, template;
-        template = '<div class="dog" />';
-        data = {
-          dog: {
-            value: 'woof',
-            'data-age': 3
-          }
-        };
-        result = facile(template, data);
-        return expect(result).toBe('<div class="dog" data-age="3">woof</div>');
-      });
-      return it('that are nested', function() {
-        var data, expectedHtml, result, template;
-        template = '<div class="order"><div class="name"><div class="place" /></div></div>';
-        data = {
-          order: [
-            {
-              name: {
-                value: 'over there',
-                place: 'cool order'
-              }
-            }
-          ]
-        };
-        result = facile(template, data);
-        expectedHtml = '<div class="order"><div class="name" place="cool order">over there</div></div>';
-        return expect(result).toBe(expectedHtml);
-      });
-    });
-    describe('binding arrays', function() {
-      it('of simple values', function() {
-        var data, result, template;
-        template = '<div class="dog" />';
-        data = {
-          dog: ['woof', 'bark']
-        };
-        result = facile(template, data);
-        return expect(result).toBe('<div class="dog">woof</div><div class="dog">bark</div>');
-      });
-      it('of value objects', function() {
-        var data, result, template;
-        template = '<div class="dog" />';
-        data = {
-          dog: [
-            {
-              value: 'woof',
-              'data-age': 3
-            }, {
-              value: 'bark',
-              'data-peak': 27
-            }
-          ]
-        };
-        result = facile(template, data);
-        return expect(result).toBe('<div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div>');
       });
       it('of binding objects', function() {
         var data, expectedHtml, result, template;
@@ -134,7 +63,7 @@
         result = facile(template, data);
         return expect(result).toBe('');
       });
-      return it('by removing elements by class', function() {
+      it('by removing elements by class', function() {
         var data, result, template;
         template = '<div class="dog" />';
         data = {
@@ -143,22 +72,22 @@
         result = facile(template, data);
         return expect(result).toBe('');
       });
-    });
-    it('bug: support nested nulls', function() {
-      var data, expectedHtml, result, template;
-      template = '<div class="order"><div class="name"><div class="place" /></div></div>';
-      data = {
-        order: [
-          {
-            name: {
-              place: null
+      return it('when they are nested', function() {
+        var data, expectedHtml, result, template;
+        template = '<div class="order"><div class="name"><div class="place" /></div></div>';
+        data = {
+          order: [
+            {
+              name: {
+                place: null
+              }
             }
-          }
-        ]
-      };
-      result = facile(template, data);
-      expectedHtml = '<div class="order"><div class="name"></div></div>';
-      return expect(result).toBe(expectedHtml);
+          ]
+        };
+        result = facile(template, data);
+        expectedHtml = '<div class="order"><div class="name"></div></div>';
+        return expect(result).toBe(expectedHtml);
+      });
     });
     return describe('appends classes', function() {
       it('to objects bound via classes', function() {
@@ -166,7 +95,7 @@
         template = '<div class="dog" />';
         data = {
           dog: {
-            value: 'woof',
+            content: 'woof',
             'class': 'spaniel'
           }
         };
@@ -178,7 +107,7 @@
         template = '<div id="dog" />';
         data = {
           dog: {
-            value: 'woof',
+            content: 'woof',
             'class': 'spaniel'
           }
         };

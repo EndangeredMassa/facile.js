@@ -15,9 +15,9 @@ bindBindingObject = ($html, key, value) ->
   for attr, attrValue of value
     bindNullableData($html, attr, attrValue)
 
-bindValueObject = ($html, key, value) ->
-  $html.html(value.value)
-  for attr, attrValue of value when attr != 'value'
+bindContentObject = ($html, key, value) ->
+  $html.html(value.content)
+  for attr, attrValue of value when attr != 'content'
     if attr == 'class'
       $html.attr('class', combineClasses($html.attr('class'), attrValue))
     else
@@ -30,8 +30,8 @@ combineClasses = (existingClasses, newClasses) ->
     newClasses
 
 bindObject = ($html, key, value) ->
-  if value.value?
-    bindValueObject($html, key, value)
+  if value.content?
+    bindContentObject($html, key, value)
   else
     bindBindingObject($html, key, value)
 
