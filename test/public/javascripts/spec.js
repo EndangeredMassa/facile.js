@@ -53,6 +53,77 @@
         return expect(result).toBe(expectedHtml);
       });
     });
+    describe('binds objects', function() {
+      it('to ids', function() {
+        var data, result, template;
+        template = '<div id="dog" />';
+        data = {
+          dog: {
+            content: 'woof',
+            'data-age': 3
+          }
+        };
+        result = facile(template, data);
+        return expect(result).toBe('<div id="dog" data-age="3">woof</div>');
+      });
+      it('to classes', function() {
+        var data, result, template;
+        template = '<div class="dog" />';
+        data = {
+          dog: {
+            content: 'woof',
+            'data-age': 3
+          }
+        };
+        result = facile(template, data);
+        return expect(result).toBe('<div class="dog" data-age="3">woof</div>');
+      });
+      return it('that are nested', function() {
+        var data, expectedHtml, result, template;
+        template = '<div class="order"><div class="name"><div class="place" /></div></div>';
+        data = {
+          order: [
+            {
+              name: {
+                content: 'over there',
+                place: 'cool order'
+              }
+            }
+          ]
+        };
+        result = facile(template, data);
+        expectedHtml = '<div class="order"><div class="name" place="cool order">over there</div></div>';
+        return expect(result).toBe(expectedHtml);
+      });
+    });
+    describe('binding arrays', function() {
+      it('of simple values', function() {
+        var data, result, template;
+        template = '<div class="dog" />';
+        data = {
+          dog: ['woof', 'bark']
+        };
+        result = facile(template, data);
+        return expect(result).toBe('<div class="dog">woof</div><div class="dog">bark</div>');
+      });
+      return it('of content objects', function() {
+        var data, result, template;
+        template = '<div class="dog" />';
+        data = {
+          dog: [
+            {
+              content: 'woof',
+              'data-age': 3
+            }, {
+              content: 'bark',
+              'data-peak': 27
+            }
+          ]
+        };
+        result = facile(template, data);
+        return expect(result).toBe('<div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div>');
+      });
+    });
     describe('binds nulls', function() {
       it('by removing elements by id', function() {
         var data, result, template;
