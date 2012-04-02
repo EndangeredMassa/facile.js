@@ -47,7 +47,11 @@
 
   combineClasses = function(existingClasses, newClasses) {
     if (existingClasses) {
-      return "" + existingClasses + " " + newClasses;
+      if (newClasses.length > 0) {
+        return "" + existingClasses + " " + newClasses;
+      } else {
+        return existingClasses;
+      }
     } else {
       return newClasses;
     }

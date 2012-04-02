@@ -113,3 +113,10 @@ describe 'facile', ->
       result = facile(template, data)
       expect(result).toBe('<div id="dog" class="spaniel">woof</div>')
 
+    it 'ignores empty class values', ->
+      template = '<div class="dog" />'
+      data = {dog: {content: 'woof', 'class': ''} }
+      result = facile(template, data)
+      expect(result).toBe('<div class="dog">woof</div>')
+
+

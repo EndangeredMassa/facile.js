@@ -25,7 +25,10 @@ bindContentObject = ($html, key, value) ->
 
 combineClasses = (existingClasses, newClasses) ->
   if existingClasses
-    "#{existingClasses} #{newClasses}"
+    if newClasses.length > 0
+      "#{existingClasses} #{newClasses}"
+    else
+      existingClasses
   else
     newClasses
 

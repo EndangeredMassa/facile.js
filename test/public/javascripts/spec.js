@@ -173,7 +173,7 @@
         result = facile(template, data);
         return expect(result).toBe('<div class="dog spaniel">woof</div>');
       });
-      return it('to objects bound via ids', function() {
+      it('to objects bound via ids', function() {
         var data, result, template;
         template = '<div id="dog" />';
         data = {
@@ -184,6 +184,18 @@
         };
         result = facile(template, data);
         return expect(result).toBe('<div id="dog" class="spaniel">woof</div>');
+      });
+      return it('ignores empty class values', function() {
+        var data, result, template;
+        template = '<div class="dog" />';
+        data = {
+          dog: {
+            content: 'woof',
+            'class': ''
+          }
+        };
+        result = facile(template, data);
+        return expect(result).toBe('<div class="dog">woof</div>');
       });
     });
   });
