@@ -2,7 +2,7 @@
 Facile
 ===
 
-Convention-based template engine that depends on jQuery.
+Convention-based template engine that depends on jQuery or zepto.
 
 Features
 ===
@@ -18,6 +18,7 @@ See tests for a more complete explanation.
 Running the tests
 ===
 1. Install node, npm, coffee-script
-1. ./coffee -> to watch/recompile coffee
-1. node test
-1. http://localhost:5000
+1. ./coffee   # to watch/recompile coffee
+1. node test  # run jasmine server
+1. visit http://localhost:5000
+
