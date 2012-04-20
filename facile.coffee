@@ -1,6 +1,11 @@
 bindArray = ($html, key, value) ->
   $original = $html.find('.'+key)
   return if $original.length == 0
+
+  $nested = $original.find('.'+key)
+  if $nested.length > 0
+    $original = $nested
+
   if $original.is('table')
     $original = $original.find('tbody tr')
   for arrayValue in value

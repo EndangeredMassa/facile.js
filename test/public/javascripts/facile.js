@@ -2,9 +2,11 @@
   var bindArray, bindBindingObject, bindContentObject, bindData, bindNullableData, bindObject, bindValue, combineClasses;
 
   bindArray = function($html, key, value) {
-    var $clone, $original, arrayValue, _i, _len;
+    var $clone, $nested, $original, arrayValue, _i, _len;
     $original = $html.find('.' + key);
     if ($original.length === 0) return;
+    $nested = $original.find('.' + key);
+    if ($nested.length > 0) $original = $nested;
     if ($original.is('table')) $original = $original.find('tbody tr');
     for (_i = 0, _len = value.length; _i < _len; _i++) {
       arrayValue = value[_i];
