@@ -1,5 +1,6 @@
 bindArray = ($html, key, value) ->
   $original = $html.find('.'+key)
+  return if $original.length == 0
   if $original.is('table')
     $original = $original.find('tbody tr')
   for arrayValue in value
