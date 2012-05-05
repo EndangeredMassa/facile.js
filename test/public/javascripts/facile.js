@@ -1,24 +1,34 @@
 (function() {
-  var bindArray, bindBindingObject, bindContentObject, bindData, bindNullableData, bindObject, bindValue, combineClasses;
+  var bindArray, bindBindingObject, bindContentObject, bindData, bindNullableData, bindObject, bindValue, combineClasses, find;
+
+  find = function($el, key) {
+    var $result;
+    $result = $el.find('#' + key);
+    if ($result.length === 0) $result = $el.find('.' + key);
+    return $result;
+  };
 
   bindArray = function($html, key, value) {
-    var $clone, $nested, $original, arrayValue, _i, _len;
-    $original = $html.find('.' + key);
-    if ($original.length === 0) return;
-    $nested = $original.find('.' + key);
-    if ($nested.length > 0) $original = $nested;
-    if ($original.is('table')) $original = $original.find('tbody tr');
+    var $clone, $nested, $root, $template, arrayValue, newHtml, _i, _len, _results;
+    $root = find($html, key);
+    if ($root.length === 0) return;
+    $nested = find($root, key);
+    if ($nested.length > 0) $root = $nested;
+    if ($root.is('table')) $root = $root.find('tbody');
+    $template = $root.children().remove();
+    _results = [];
     for (_i = 0, _len = value.length; _i < _len; _i++) {
       arrayValue = value[_i];
-      $clone = $original.clone();
+      $clone = $template.clone();
       if (arrayValue.constructor === Object) {
-        bindObject($clone, key, arrayValue);
+        newHtml = facile($clone, arrayValue);
+        _results.push($root.append(newHtml));
       } else {
         $clone.html(arrayValue);
+        _results.push($root.before($clone));
       }
-      $original.before($clone);
     }
-    return $original.remove();
+    return _results;
   };
 
   bindBindingObject = function($html, key, value) {
@@ -69,13 +79,9 @@
   };
 
   bindValue = function($html, key, value) {
-    var $byId;
-    $byId = $html.find('#' + key);
-    if ($byId.length > 0) {
-      return $byId.html(value);
-    } else {
-      return $html.find('.' + key).html(value);
-    }
+    var $el;
+    $el = find($html, key);
+    if ($el.length > 0) return $el.html(value);
   };
 
   bindData = function($html, key, value) {
@@ -83,8 +89,7 @@
     if (value.constructor === Array) {
       return bindArray($html, key, value);
     } else if (value.constructor === Object) {
-      $target = $html.find('#' + key);
-      if ($target.length === 0) $target = $html.find('.' + key);
+      $target = find($html, key);
       return bindObject($target, key, value);
     } else {
       return bindValue($html, key, value);
@@ -92,11 +97,12 @@
   };
 
   bindNullableData = function($html, key, value) {
+    var $el;
     if (value != null) {
       return bindData($html, key, value);
     } else {
-      $html.find('#' + key).remove();
-      return $html.find('.' + key).remove();
+      $el = find($html, key);
+      return $el.remove();
     }
   };
 

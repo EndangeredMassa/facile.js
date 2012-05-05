@@ -22,9 +22,9 @@
       });
       it('of binding objects', function() {
         var data, expectedHtml, result, template;
-        template = '<div class="order"><div class="name" /></div>';
+        template = '<div id="orders"><div class="order"><div class="name" /></div></div>';
         data = {
-          order: [
+          orders: [
             {
               name: 'cool order'
             }, {
@@ -33,7 +33,7 @@
           ]
         };
         result = facile(template, data);
-        expectedHtml = '<div class="order"><div class="name">cool order</div></div><div class="order"><div class="name">lame order</div></div>';
+        expectedHtml = '<div id="orders"><div class="order"><div class="name">cool order</div></div><div class="order"><div class="name">lame order</div></div></div>';
         return expect(result).toBe(expectedHtml);
       });
       return it('to tables as rows', function() {
@@ -97,20 +97,27 @@
       });
     });
     describe('binding arrays', function() {
-      it('of simple values', function() {
+      xit('binds to class and id');
+      it('of binding objects', function() {
         var data, result, template;
-        template = '<div class="dog" />';
+        template = '<div id="dogs"><div class="dog"><div class="speak" /></div></div>';
         data = {
-          dog: ['woof', 'bark']
+          dogs: [
+            {
+              speak: 'woof'
+            }, {
+              speak: 'bark'
+            }
+          ]
         };
         result = facile(template, data);
-        return expect(result).toBe('<div class="dog">woof</div><div class="dog">bark</div>');
+        return expect(result).toBe('<div id="dogs"><div class="dog"><div class="speak">woof</div></div><div class="dog"><div class="speak">bark</div></div></div>');
       });
-      it('of content objects', function() {
+      xit('of content objects', function() {
         var data, result, template;
-        template = '<div class="dog" />';
+        template = '<div id="dogs"><div class="dog" /></div>';
         data = {
-          dog: [
+          dogs: [
             {
               content: 'woof',
               'data-age': 3
@@ -121,11 +128,11 @@
           ]
         };
         result = facile(template, data);
-        return expect(result).toBe('<div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div>');
+        return expect(result).toBe('<div id="dogs"><div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div></div>');
       });
-      return it('ignores if child with same class exists', function() {
+      return xit('ignores if child with same class exists', function() {
         var data, result, template;
-        template = '<div class="dogs"><h1>Dog Time!</h1><div class="dogs" /></div>';
+        template = '<div class="dog"><h1>Dog Time!</h1><div class="dogs" /></div>';
         data = {
           dogs: ['woof', 'bark']
         };
