@@ -52,8 +52,13 @@ bindObject = ($html, key, value) ->
     bindBindingObject($html, key, value)
 
 bindValue = ($html, key, value) ->
-  $el = find($html, key)
-  $el.html(value) if $el.length > 0
+  if key.indexOf('@') != -1
+    [key, attr] = key.split('@')
+    $el = find($html, key)
+    $el.attr(attr, value)
+  else
+    $el = find($html, key)
+    $el.html(value) if $el.length > 0
 
 bindData = ($html, key, value) ->
   if value.constructor == Array

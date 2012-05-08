@@ -79,6 +79,26 @@
         result = facile(template, data);
         return expect(result).toBe('<div class="dog" data-age="3">woof</div>');
       });
+      it('to ids with attribute syntaxt', function() {
+        var data, result, template;
+        template = '<div id="dog" />';
+        data = {
+          dog: 'woof',
+          'dog@data-age': 3
+        };
+        result = facile(template, data);
+        return expect(result).toBe('<div id="dog" data-age="3">woof</div>');
+      });
+      it('to classes with attribute syntaxt', function() {
+        var data, result, template;
+        template = '<div class="dog" />';
+        data = {
+          dog: 'woof',
+          'dog@data-age': 3
+        };
+        result = facile(template, data);
+        return expect(result).toBe('<div class="dog" data-age="3">woof</div>');
+      });
       return it('that are nested', function() {
         var data, expectedHtml, result, template;
         template = '<div class="order"><div class="name"><div class="place" /></div></div>';

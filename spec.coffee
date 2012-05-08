@@ -47,6 +47,18 @@ describe 'facile', ->
       result = facile(template, data)
       expect(result).toBe('<div class="dog" data-age="3">woof</div>')
 
+    it 'to ids with attribute syntaxt', ->
+      template = '<div id="dog" />'
+      data = {dog: 'woof', 'dog@data-age': 3}
+      result = facile(template, data)
+      expect(result).toBe('<div id="dog" data-age="3">woof</div>')
+
+    it 'to classes with attribute syntaxt', ->
+      template = '<div class="dog" />'
+      data = {dog: 'woof', 'dog@data-age': 3}
+      result = facile(template, data)
+      expect(result).toBe('<div class="dog" data-age="3">woof</div>')
+
     it 'that are nested', ->
       template = '<div class="order"><div class="name"><div class="place" /></div></div>'
       data =

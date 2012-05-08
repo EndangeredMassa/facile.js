@@ -88,10 +88,16 @@
   };
 
   bindValue = function($html, key, value) {
-    var $el;
-    $el = find($html, key);
-    if ($el.length > 0) {
-      return $el.html(value);
+    var $el, attr, _ref;
+    if (key.indexOf('@') !== -1) {
+      _ref = key.split('@'), key = _ref[0], attr = _ref[1];
+      $el = find($html, key);
+      return $el.attr(attr, value);
+    } else {
+      $el = find($html, key);
+      if ($el.length > 0) {
+        return $el.html(value);
+      }
     }
   };
 
