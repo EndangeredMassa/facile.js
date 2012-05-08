@@ -13,14 +13,14 @@ describe 'facile', ->
       expect(result).toBe('<div class="dog">woof</div>')
 
     it 'of binding objects', ->
-      template = '<div class="order"><div class="name" /></div>'
+      template = '<div id="orders"><div class="order"><div class="name" /></div></div>'
       data =
-        order: [
+        orders: [
           { name: 'cool order' }
           { name: 'lame order' }
         ]
       result = facile(template, data)
-      expectedHtml = '<div class="order"><div class="name">cool order</div></div><div class="order"><div class="name">lame order</div></div>'
+      expectedHtml = '<div id="orders"><div class="order"><div class="name">cool order</div></div><div class="order"><div class="name">lame order</div></div></div>'
       expect(result).toBe(expectedHtml)
 
     it 'to tables as rows', ->
@@ -60,21 +60,37 @@ describe 'facile', ->
       expect(result).toBe(expectedHtml)
 
   describe 'binding arrays', ->
-    it 'of simple values', ->
-      template = '<div class="dog" />'
-      data = {dog: ['woof', 'bark']}
-      result = facile(template, data)
-      expect(result).toBe('<div class="dog">woof</div><div class="dog">bark</div>')
+    xit 'binds to class and id'
 
-    it 'of content objects', ->
-      template = '<div class="dog" />'
+    it 'of binding objects', ->
+      template = '<div id="dogs"><div class="dog"><div class="speak" /></div></div>'
       data =
-        dog: [
+        dogs: [
+          { speak: 'woof' }
+          { speak: 'bark' }
+        ]
+      result = facile(template, data)
+      expect(result).toBe('<div id="dogs"><div class="dog"><div class="speak">woof</div></div><div class="dog"><div class="speak">bark</div></div></div>')
+
+    xit 'of content objects', ->
+      template = '<div id="dogs"><div class="dog" /></div>'
+      data =
+        dogs: [
           {content: 'woof', 'data-age': 3}
           {content: 'bark', 'data-peak': 27}
         ]
       result = facile(template, data)
-      expect(result).toBe('<div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div>')
+      expect(result).toBe('<div id="dogs"><div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div></div>')
+
+    xit 'ignores if child with same class exists', ->
+      template = '<div class="dog"><h1>Dog Time!</h1><div class="dogs" /></div>'
+      data =
+        dogs: [
+          'woof'
+          'bark'
+        ]
+      result = facile(template, data)
+      expect(result).toBe('<div class="dogs"><h1>Dog Time!</h1><div class="dogs">woof</div><div class="dogs">bark</div></div>')
 
   describe 'binds nulls', ->
     it 'by removing elements by id', ->
@@ -113,3 +129,8 @@ describe 'facile', ->
       result = facile(template, data)
       expect(result).toBe('<div id="dog" class="spaniel">woof</div>')
 
+    it 'ignores empty class values', ->
+      template = '<div class="dog" />'
+      data = {dog: {content: 'woof', 'class': ''} }
+      result = facile(template, data)
+      expect(result).toBe('<div class="dog">woof</div>')

@@ -1,15 +1,28 @@
+find = ($el, key) ->
+  $result = $el.find('#' + key)
+  $result = $el.find('.' + key) if $result.length == 0
+  $result
+
 bindArray = ($html, key, value) ->
-  $original = $html.find('.'+key)
-  if $original.is('table')
-    $original = $original.find('tbody tr')
+  $root = find($html, key)
+  return if $root.length == 0
+
+  $nested = find($root, key)
+  if $nested.length > 0
+    $root = $nested
+
+  if $root.is('table')
+    $root = $root.find('tbody')
+
+  $template = $root.children().remove()
   for arrayValue in value
-    $clone = $original.clone()
+    $clone = $template.clone()
     if arrayValue.constructor == Object
-      bindObject($clone, key, arrayValue)
+      newHtml = facile($clone, arrayValue)
+      $root.append(newHtml)
     else
       $clone.html(arrayValue)
-    $original.before($clone)
-  $original.remove()
+      $root.before($clone)
 
 bindBindingObject = ($html, key, value) ->
   for attr, attrValue of value
@@ -25,7 +38,10 @@ bindContentObject = ($html, key, value) ->
 
 combineClasses = (existingClasses, newClasses) ->
   if existingClasses
-    "#{existingClasses} #{newClasses}"
+    if newClasses.length > 0
+      "#{existingClasses} #{newClasses}"
+    else
+      existingClasses
   else
     newClasses
 
@@ -36,18 +52,14 @@ bindObject = ($html, key, value) ->
     bindBindingObject($html, key, value)
 
 bindValue = ($html, key, value) ->
-  $byId = $html.find('#'+key)
-  if $byId.length > 0
-    $byId.html(value)
-  else
-    $html.find('.'+key).html(value)
+  $el = find($html, key)
+  $el.html(value) if $el.length > 0
 
 bindData = ($html, key, value) ->
   if value.constructor == Array
     bindArray($html, key, value)
   else if value.constructor == Object
-    $target = $html.find('#'+key)
-    $target = $html.find('.'+key) if $target.length == 0
+    $target = find($html, key)
     bindObject($target, key, value)
   else
     bindValue($html, key, value)
@@ -56,8 +68,8 @@ bindNullableData = ($html, key, value) ->
   if value?
     bindData($html, key, value)
   else
-    $html.find('#'+key).remove()
-    $html.find('.'+key).remove()
+    $el = find($html, key)
+    $el.remove()
 
 window.facile = (html, data) ->
   $html = $('<div />').append($(html))
