@@ -134,31 +134,26 @@
         result = facile(template, data);
         return expect(result).toBe('<div id="dogs"><div class="dog"><div class="speak">woof</div></div><div class="dog"><div class="speak">bark</div></div></div>');
       });
-      xit('of content objects', function() {
+      return it('of content objects', function() {
         var data, result, template;
         template = '<div id="dogs"><div class="dog" /></div>';
         data = {
           dogs: [
             {
-              content: 'woof',
-              'data-age': 3
+              dog: {
+                content: 'woof',
+                'data-age': 3
+              }
             }, {
-              content: 'bark',
-              'data-peak': 27
+              dog: {
+                content: 'bark',
+                'data-peak': 27
+              }
             }
           ]
         };
         result = facile(template, data);
         return expect(result).toBe('<div id="dogs"><div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div></div>');
-      });
-      return xit('ignores if child with same class exists', function() {
-        var data, result, template;
-        template = '<div class="dog"><h1>Dog Time!</h1><div class="dogs" /></div>';
-        data = {
-          dogs: ['woof', 'bark']
-        };
-        result = facile(template, data);
-        return expect(result).toBe('<div class="dogs"><h1>Dog Time!</h1><div class="dogs">woof</div><div class="dogs">bark</div></div>');
       });
     });
     describe('binds nulls', function() {

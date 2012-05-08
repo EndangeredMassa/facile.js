@@ -84,25 +84,15 @@ describe 'facile', ->
       result = facile(template, data)
       expect(result).toBe('<div id="dogs"><div class="dog"><div class="speak">woof</div></div><div class="dog"><div class="speak">bark</div></div></div>')
 
-    xit 'of content objects', ->
+    it 'of content objects', ->
       template = '<div id="dogs"><div class="dog" /></div>'
       data =
         dogs: [
-          {content: 'woof', 'data-age': 3}
-          {content: 'bark', 'data-peak': 27}
+          {dog: {content: 'woof', 'data-age': 3}}
+          {dog: {content: 'bark', 'data-peak': 27}}
         ]
       result = facile(template, data)
       expect(result).toBe('<div id="dogs"><div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div></div>')
-
-    xit 'ignores if child with same class exists', ->
-      template = '<div class="dog"><h1>Dog Time!</h1><div class="dogs" /></div>'
-      data =
-        dogs: [
-          'woof'
-          'bark'
-        ]
-      result = facile(template, data)
-      expect(result).toBe('<div class="dogs"><h1>Dog Time!</h1><div class="dogs">woof</div><div class="dogs">bark</div></div>')
 
   describe 'binds nulls', ->
     it 'by removing elements by id', ->
