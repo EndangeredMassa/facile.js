@@ -101,7 +101,7 @@
     } else {
       $el = find($template, key);
       if ($el.length > 0) {
-        return $el.html(value);
+        return $el.html('' + value);
       }
     }
   };
