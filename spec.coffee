@@ -6,6 +6,12 @@ describe 'facile', ->
       result = facile(template, data)
       expect(result).toBe('<div id="dog">woof</div>')
 
+    it 'even if it is a boolean', ->
+      template = '<td class="dog" />'
+      data = {dog: true}
+      result = facile(template, data)
+      expect(result).toBe('<td class="dog">true</td>')
+
     it 'to classes if id does not exist', ->
       template = '<div class="dog" />'
       data = {dog: 'woof'}
@@ -47,7 +53,7 @@ describe 'facile', ->
       result = facile(template, data)
       expect(result).toBe('<div class="dog" data-age="3">woof</div>')
 
-    it 'to ids with attribute syntaxt', ->
+    it 'to ids with attribute syntax', ->
       template = '<div id="dog" />'
       data = {dog: 'woof', 'dog@data-age': 3}
       result = facile(template, data)

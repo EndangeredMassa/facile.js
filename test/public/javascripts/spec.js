@@ -12,6 +12,15 @@
         result = facile(template, data);
         return expect(result).toBe('<div id="dog">woof</div>');
       });
+      it('even if it is a boolean', function() {
+        var data, result, template;
+        template = '<td class="dog" />';
+        data = {
+          dog: true
+        };
+        result = facile(template, data);
+        return expect(result).toBe('<td class="dog">true</td>');
+      });
       it('to classes if id does not exist', function() {
         var data, result, template;
         template = '<div class="dog" />';
@@ -79,7 +88,7 @@
         result = facile(template, data);
         return expect(result).toBe('<div class="dog" data-age="3">woof</div>');
       });
-      it('to ids with attribute syntaxt', function() {
+      it('to ids with attribute syntax', function() {
         var data, result, template;
         template = '<div id="dog" />';
         data = {

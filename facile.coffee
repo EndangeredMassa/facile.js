@@ -68,7 +68,7 @@ bindValue = ($template, key, value) ->
     $el.attr(attr, value)
   else
     $el = find($template, key)
-    $el.html(value) if $el.length > 0
+    $el.html('' + value) if $el.length > 0
 
 bindNestedObject = ($template, key, value) ->
   for attr, attrValue of value
