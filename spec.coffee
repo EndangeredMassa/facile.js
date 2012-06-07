@@ -77,6 +77,14 @@ describe 'facile', ->
       expectedHtml = '<div class="order"><div class="name" place="cool order">over there</div></div>'
       expect(result).toBe(expectedHtml)
 
+    it 'fills value for input tags by default', ->
+      template = '<div class="dog"><input class="name"></div>'
+      data =
+        dog: [ name: 'Rex' ]
+      result = facile(template, data)
+      expectedHtml = '<div class="dog"><input class="name" value="Rex"></div>'
+      expect(result).toBe(expectedHtml)
+
   describe 'binding arrays', ->
     xit 'binds to class and id'
 

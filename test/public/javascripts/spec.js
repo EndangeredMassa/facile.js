@@ -108,7 +108,7 @@
         result = facile(template, data);
         return expect(result).toBe('<div class="dog" data-age="3">woof</div>');
       });
-      return it('that are nested', function() {
+      it('that are nested', function() {
         var data, expectedHtml, result, template;
         template = '<div class="order"><div class="name"><div class="place" /></div></div>';
         data = {
@@ -123,6 +123,20 @@
         };
         result = facile(template, data);
         expectedHtml = '<div class="order"><div class="name" place="cool order">over there</div></div>';
+        return expect(result).toBe(expectedHtml);
+      });
+      return it('fills value for input tags by default', function() {
+        var data, expectedHtml, result, template;
+        template = '<div class="dog"><input class="name"></div>';
+        data = {
+          dog: [
+            {
+              name: 'Rex'
+            }
+          ]
+        };
+        result = facile(template, data);
+        expectedHtml = '<div class="dog"><input class="name" value="Rex"></div>';
         return expect(result).toBe(expectedHtml);
       });
     });
