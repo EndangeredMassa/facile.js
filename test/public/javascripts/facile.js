@@ -101,7 +101,11 @@
     } else {
       $el = find($template, key);
       if ($el.length > 0) {
-        return $el.html('' + value);
+        if ($el.prop('tagName') === 'INPUT') {
+          return $el.attr('value', '' + value);
+        } else {
+          return $el.html('' + value);
+        }
       }
     }
   };
