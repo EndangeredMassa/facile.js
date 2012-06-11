@@ -97,7 +97,11 @@
     if (key.indexOf('@') !== -1) {
       _ref = key.split('@'), key = _ref[0], attr = _ref[1];
       $el = find($template, key);
-      return $el.attr(attr, value);
+      if ($el.prop('tagName') === 'SELECT') {
+        return $el.find("option[value=" + value + "]").attr('selected', 'selected');
+      } else {
+        return $el.attr(attr, value);
+      }
     } else {
       $el = find($template, key);
       if ($el.length > 0) {

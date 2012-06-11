@@ -65,7 +65,10 @@ bindValue = ($template, key, value) ->
   if key.indexOf('@') != -1
     [key, attr] = key.split('@')
     $el = find($template, key)
-    $el.attr(attr, value)
+    if $el.prop('tagName') == 'SELECT'
+      $el.find("option[value=#{value}]").attr('selected', 'selected')
+    else
+      $el.attr(attr, value)
   else
     $el = find($template, key)
     if $el.length > 0
