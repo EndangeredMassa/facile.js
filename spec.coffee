@@ -85,6 +85,14 @@ describe 'facile', ->
       expectedHtml = '<div class="dog"><input class="name" value="Rex"></div>'
       expect(result).toBe(expectedHtml)
 
+    it 'selects an option for select tags with a value', ->
+      template = '<select class="dog"><option value="Rex"></option></select>'
+      data =
+        'dog@value': 'Rex'
+      result = facile(template, data)
+      expectedHtml = '<select class="dog"><option value="Rex" selected="selected"></option></select>'
+      expect(result).toBe(expectedHtml)
+
   describe 'binding arrays', ->
     xit 'binds to class and id'
 

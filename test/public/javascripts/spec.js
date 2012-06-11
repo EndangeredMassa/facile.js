@@ -125,7 +125,7 @@
         expectedHtml = '<div class="order"><div class="name" place="cool order">over there</div></div>';
         return expect(result).toBe(expectedHtml);
       });
-      return it('fills value for input tags by default', function() {
+      it('fills value for input tags by default', function() {
         var data, expectedHtml, result, template;
         template = '<div class="dog"><input class="name"></div>';
         data = {
@@ -137,6 +137,16 @@
         };
         result = facile(template, data);
         expectedHtml = '<div class="dog"><input class="name" value="Rex"></div>';
+        return expect(result).toBe(expectedHtml);
+      });
+      return it('selects an option for select tags with a value', function() {
+        var data, expectedHtml, result, template;
+        template = '<select class="dog"><option value="Rex"></option></select>';
+        data = {
+          'dog@value': 'Rex'
+        };
+        result = facile(template, data);
+        expectedHtml = '<select class="dog"><option value="Rex" selected="selected"></option></select>';
         return expect(result).toBe(expectedHtml);
       });
     });
