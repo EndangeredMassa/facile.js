@@ -86,11 +86,11 @@ describe 'facile', ->
       expect(result).toBe(expectedHtml)
 
     it 'selects an option for select tags with a value', ->
-      template = '<select class="dog"><option value="Rex"></option></select>'
+      template = '<select class="dog"><option value="Rex Maximus"></option></select>'
       data =
-        'dog@value': 'Rex'
+        'dog@value': 'Rex Maximus'
       result = facile(template, data)
-      expectedHtml = '<select class="dog"><option value="Rex" selected="selected"></option></select>'
+      expectedHtml = '<select class="dog"><option value="Rex Maximus" selected="selected"></option></select>'
       expect(result).toBe(expectedHtml)
 
   describe 'binding arrays', ->
