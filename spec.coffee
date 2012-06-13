@@ -86,11 +86,30 @@ describe 'facile', ->
       expect(result).toBe(expectedHtml)
 
     it 'selects an option for select tags with a value', ->
-      template = '<select class="dog"><option value="Rex"></option></select>'
+      template = '<select class="dog"><option value="Rex Maximus"></option></select>'
       data =
-        'dog@value': 'Rex'
+        'dog@value': 'Rex Maximus'
       result = facile(template, data)
-      expectedHtml = '<select class="dog"><option value="Rex" selected="selected"></option></select>'
+      expectedHtml = '<select class="dog"><option value="Rex Maximus" selected="selected"></option></select>'
+      expect(result).toBe(expectedHtml)
+
+    it 'selects an option for select tags if its value is not an object', ->
+      template = '<select class="dog"><option value="Rex Maximus"></option></select>'
+      data =
+        'dog': 'Rex Maximus'
+      result = facile(template, data)
+      expectedHtml = '<select class="dog"><option value="Rex Maximus" selected="selected"></option></select>'
+      expect(result).toBe(expectedHtml)
+
+    it 'binds a select tag normally if its value is an object', ->
+      template = '<select class="dog"><option class="option"></option></select>'
+      data =
+        'dog': [
+          { option: 'Rex Maximus' },
+          { option: 'Mr. Monster' }
+        ]
+      result = facile(template, data)
+      expectedHtml = '<select class="dog"><option class="option" value="Rex Maximus"></option><option class="option" value="Mr. Monster"></option></select>'
       expect(result).toBe(expectedHtml)
 
   describe 'binding arrays', ->

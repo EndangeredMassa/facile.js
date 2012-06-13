@@ -66,14 +66,16 @@ bindValue = ($template, key, value) ->
     [key, attr] = key.split('@')
     $el = find($template, key)
     if $el.prop('tagName') == 'SELECT'
-      $el.find("option[value=#{value}]").attr('selected', 'selected')
+      $el.find("option[value='#{value}']").attr('selected', 'selected')
     else
       $el.attr(attr, value)
   else
     $el = find($template, key)
     if $el.length > 0
-      if $el.prop('tagName') == 'INPUT'
+      if $el.prop('tagName') == 'INPUT' || $el.prop('tagName') == 'OPTION'
         $el.attr('value', '' + value)
+      else if $el.prop('tagName') == 'SELECT' && value.constructor != Object
+        $el.find("option[value='#{value}']").attr('selected', 'selected')
       else
         $el.html('' + value)
 
