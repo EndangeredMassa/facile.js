@@ -105,8 +105,10 @@
     } else {
       $el = find($template, key);
       if ($el.length > 0) {
-        if ($el.prop('tagName') === 'INPUT') {
+        if ($el.prop('tagName') === 'INPUT' || $el.prop('tagName') === 'OPTION') {
           return $el.attr('value', '' + value);
+        } else if ($el.prop('tagName') === 'SELECT' && value.constructor !== Object) {
+          return $el.find("option[value='" + value + "']").attr('selected', 'selected');
         } else {
           return $el.html('' + value);
         }
