@@ -2,6 +2,8 @@
 Facile
 ===
 
+[![Build Status](https://secure.travis-ci.org/lawlesst/bibjsontools.png?branch=master)](http://travis-ci.org/lawlesst/bibjsontools)
+
 Convention-based template engine that depends on jQuery or zepto.
 
 Features
