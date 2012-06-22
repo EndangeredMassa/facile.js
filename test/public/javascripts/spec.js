@@ -149,6 +149,20 @@
         expectedHtml = '<select class="dog"><option value="Rex Maximus" selected="selected"></option></select>';
         return expect(result).toBe(expectedHtml);
       });
+      it('checks a checkbox given a boolean value', function() {
+        var data, expectedHtml, result, template;
+        template = '<div class="dog"><input type="checkbox" class="name"></div>';
+        data = {
+          dog: [
+            {
+              name: true
+            }
+          ]
+        };
+        result = facile(template, data);
+        expectedHtml = '<div class="dog"><input type="checkbox" class="name" checked="checked"></div>';
+        return expect(result).toBe(expectedHtml);
+      });
       it('selects an option for select tags if its value is not an object', function() {
         var data, expectedHtml, result, template;
         template = '<select class="dog"><option value="Rex Maximus"></option></select>';

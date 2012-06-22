@@ -105,7 +105,9 @@
     } else {
       $el = find($template, key);
       if ($el.length > 0) {
-        if ($el.prop('tagName') === 'INPUT' || $el.prop('tagName') === 'OPTION') {
+        if ($el.prop('tagName') === 'INPUT' && $el.attr('type') === 'checkbox' && value) {
+          return $el.attr('checked', true);
+        } else if ($el.prop('tagName') === 'INPUT' || $el.prop('tagName') === 'OPTION') {
           return $el.attr('value', '' + value);
         } else if ($el.prop('tagName') === 'SELECT' && value.constructor !== Object) {
           return $el.find("option[value='" + value + "']").attr('selected', 'selected');
