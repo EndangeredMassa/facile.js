@@ -93,6 +93,14 @@ describe 'facile', ->
       expectedHtml = '<select class="dog"><option value="Rex Maximus" selected="selected"></option></select>'
       expect(result).toBe(expectedHtml)
 
+    it 'checks a checkbox given a boolean value', ->
+      template = '<div class="dog"><input type="checkbox" class="name"></div>'
+      data =
+        dog: [ name: true ]
+      result = facile(template, data)
+      expectedHtml = '<div class="dog"><input type="checkbox" class="name" checked="checked"></div>'
+      expect(result).toBe(expectedHtml)
+
     it 'selects an option for select tags if its value is not an object', ->
       template = '<select class="dog"><option value="Rex Maximus"></option></select>'
       data =
