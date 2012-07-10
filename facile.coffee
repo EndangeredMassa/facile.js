@@ -20,6 +20,10 @@ facile = (template, data) ->
     bindOrRemove($template, key, value)
   $template.html()
 
+# Compile method for using in Express
+facile.compile = (template, options) ->
+  (locals) -> facile(template, locals)
+
 bindOrRemove = ($template, key, value) ->
   if value?
     bindData($template, key, value)

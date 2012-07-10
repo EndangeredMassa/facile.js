@@ -107,7 +107,7 @@ var template = '<p>Hello!</p><p class="impolite">Take a hike, guy.</p>',
     data = {impolite: null};
 facile(template, data);
 // returns "<p>Hello!</p>"
-
+```
 
 ### Setting DOM Attributes
 
@@ -132,6 +132,24 @@ var template = '<div id="dog" />',
     data = {dog: 'woof', 'dog@data-age': 3};
 facile(template, data);
 // returns '<div id="dog" data-age="3">woof</div>'
+```
+
+### Using Facile with Express
+
+Facile works out of the box as a render engine in the Express framework 
+in Node.js. If you are suffixing your view files with `.facile` then you
+simply need to add this line to your Express app:
+
+```javascript
+app.set("view engine", "facile");
+```
+
+If you would rather name your view files with a `.html` suffix, add these
+lines instead:
+
+```javascript
+app.set("view engine", "html");
+app.register(".html", require(facile));
 ```
 
 ## Running the Tests
