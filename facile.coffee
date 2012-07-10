@@ -1,3 +1,5 @@
+$ = this.$ || require "cheerio"
+
 find = ($el, key) ->
   $result = $el.find('#' + key)
   $result = $el.find('.' + key) if $result.length == 0
@@ -12,7 +14,7 @@ combineClasses = (existingClasses, newClasses) ->
   else
     newClasses
 
-window.facile = (template, data) ->
+facile = (template, data) ->
   $template = $('<div />').append($(template))
   for key, value of data
     bindOrRemove($template, key, value)
@@ -42,7 +44,7 @@ bindArray = ($template, key, value) ->
   if $nested.length > 0
     $root = $nested
 
-  if $root.is('table')
+  if tagName($root) == "TABLE"
     $root = $root.find('tbody')
 
   $child = $root.children().remove()
@@ -61,22 +63,28 @@ bindObject = ($template, key, value) ->
   else
     bindNestedObject($template, key, value)
 
+tagName = ($el) ->
+  if $el.prop
+    $el.prop "tagName"
+  else
+    $el[0].name.toUpperCase()
+
 bindValue = ($template, key, value) ->
   if key.indexOf('@') != -1
     [key, attr] = key.split('@')
     $el = find($template, key)
-    if $el.prop('tagName') == 'SELECT'
+    if tagName($el) == 'SELECT'
       $el.find("option[value='#{value}']").attr('selected', 'selected')
     else
       $el.attr(attr, value)
   else
     $el = find($template, key)
     if $el.length > 0
-      if $el.prop('tagName') == 'INPUT' && $el.attr('type') == 'checkbox' && value
-        $el.attr('checked', true)
-      else if $el.prop('tagName') == 'INPUT' || $el.prop('tagName') == 'OPTION'
+      if tagName($el) == 'INPUT' && $el.attr('type') == 'checkbox' && value
+        $el.attr('checked', "checked")
+      else if tagName($el) == 'INPUT' || tagName($el) == 'OPTION'
         $el.attr('value', '' + value)
-      else if $el.prop('tagName') == 'SELECT' && value.constructor != Object
+      else if tagName($el) == 'SELECT' && value.constructor != Object
         $el.find("option[value='#{value}']").attr('selected', 'selected')
       else
         $el.html('' + value)
@@ -92,3 +100,8 @@ bindAttributeObject = ($template, key, value) ->
       $template.attr('class', combineClasses($template.attr('class'), attrValue))
     else
       $template.attr(attr, attrValue)
+
+if this.window
+  window.facile = facile
+else
+  module.exports = facile
