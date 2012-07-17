@@ -1,0 +1,246 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>facile.js</title>
+  <meta name="description" content="simple convention-based template engine">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">facile.js</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">simple convention-based template engine</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/EndangeredMassa/facile.js/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/EndangeredMassa/facile.js/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/EndangeredMassa/facile.js" class="code">View facile.js on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>Facile</h1>
+
+<p>Facile is a convention-based template engine that can be executed
+either in the browser (using jQuery or zepto) or on the server
+(using cheerio). While other template systems like Mustache give the
+developer syntax for explicit conditionals, enumerations and data 
+bindings, Facile uses simple conventions to achieve the same goals 
+with less code.</p>
+
+<h2>Installation</h2>
+
+<p>If you want to use Facile with Node.js, install it using <code>npm</code>:</p>
+
+<div class="highlight">
+<pre>npm install facile
+</pre>
+</div>
+
+
+<p>To use Facile in the browser, either copy the <code>facile.coffee</code> file
+or the compiled <code>test/public/javascripts/facile.js</code> file into your
+project.</p>
+
+<h2>Usage</h2>
+
+<p>The facile package is a single function that accepts a <code>template</code> string
+and a <code>data</code> object:</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">facile</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"facile"</span><span class="p">),</span> <span class="c1">// only needed in Node.js</span>
+    <span class="nx">template</span> <span class="o">=</span> <span class="s2">"..."</span><span class="p">,</span>
+    <span class="nx">data</span> <span class="o">=</span> <span class="p">{...},</span>
+    <span class="nx">output</span> <span class="o">=</span> <span class="nx">facile</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<h3>Data Binding by Ids and Classes</h3>
+
+<p>Facile will look for DOM ids and classes that match the keys in your
+data object and set the DOM elements' text to the data values:</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="s1">'&lt;div id="dog"&gt;&lt;/div&gt;&lt;div class="cat"&gt;&lt;/div&gt;'</span><span class="p">,</span>
+    <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="nx">dog</span><span class="o">:</span> <span class="s2">"woof"</span><span class="p">,</span> <span class="nx">cat</span><span class="o">:</span> <span class="s2">"meow"</span><span class="p">};</span>
+<span class="nx">facile</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="c1">// returns '&lt;div id="dog"&gt;woof&lt;/div&gt;&lt;div class="cat"&gt;meow&lt;/div&gt;'</span>
+</pre>
+</div>
+
+
+<h3>Looping Over Collections</h3>
+
+<p>When a value in the data object is an array, Facile will find the
+container DOM element that matches the data key and render its
+contents for each item in the array.</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="s1">'&lt;ul id="users"&gt;&lt;li class="name"&gt;&lt;/li&gt;&lt;/ul&gt;'</span><span class="p">,</span>
+    <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="nx">users</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">"Moe"</span><span class="p">},</span> 
+      <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">"Larry"</span><span class="p">},</span>
+      <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">"Curly"</span><span class="p">}</span>
+    <span class="p">]};</span>
+<span class="nx">facile</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="c1">// returns:</span>
+<span class="c1">// &lt;ul id="users"&gt;</span>
+<span class="c1">//   &lt;li class="name"&gt;Moe&lt;/li&gt;</span>
+<span class="c1">//   &lt;li class="name"&gt;Larry&lt;/li&gt;</span>
+<span class="c1">//   &lt;li class="name"&gt;Curly&lt;/li&gt;</span>
+<span class="c1">// &lt;/ul&gt;</span>
+</pre>
+</div>
+
+
+<p>If you are binding an array of data to a <code>&lt;table&gt;</code> element, Facile will
+use the content of the table's <code>&lt;tbody&gt;</code> as the template for the data object.
+This allows you to setup a <code>&lt;thead&gt;</code> without duplicating it.</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="s1">'&lt;table id="users"&gt;'</span> <span class="o">+</span>
+               <span class="s1">'  &lt;thead&gt;'</span> <span class="o">+</span>
+               <span class="s1">'    &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;/tr&gt;'</span> <span class="o">+</span>
+               <span class="s1">'  &lt;/thead&gt;'</span> <span class="o">+</span>
+               <span class="s1">'  &lt;tbody&gt;'</span> <span class="o">+</span>
+               <span class="s1">'    &lt;tr&gt;&lt;td class="name"&gt;&lt;/td&gt;&lt;/tr&gt;'</span> <span class="o">+</span>
+               <span class="s1">'  &lt;/tbody&gt;'</span> <span class="o">+</span>
+               <span class="s1">'&lt;/table&gt;'</span><span class="p">,</span>
+    <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="nx">users</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">"Moe"</span><span class="p">},</span> 
+      <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">"Larry"</span><span class="p">},</span>
+      <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">"Curly"</span><span class="p">}</span>
+    <span class="p">]};</span>
+<span class="nx">facile</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="c1">// returns:</span>
+<span class="c1">// &lt;table id="users"&gt;</span>
+<span class="c1">//   &lt;thead&gt;</span>
+<span class="c1">//     &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="c1">//   &lt;/thead&gt;</span>
+<span class="c1">//   &lt;tbody&gt;</span>
+<span class="c1">//     &lt;tr&gt;&lt;td class="name"&gt;Moe&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="c1">//     &lt;tr&gt;&lt;td class="name"&gt;Larry&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="c1">//     &lt;tr&gt;&lt;td class="name"&gt;Curly&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="c1">//   &lt;/tbody&gt;</span>
+<span class="c1">// &lt;/table&gt;</span>
+</pre>
+</div>
+
+
+<h3>Removing Elements</h3>
+
+<p>If the data object has a <code>null</code> value, the corresponding DOM element
+will be removed.</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="s1">'&lt;p&gt;Hello!&lt;/p&gt;&lt;p class="impolite"&gt;Take a hike, guy.&lt;/p&gt;'</span><span class="p">,</span>
+    <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="nx">impolite</span><span class="o">:</span> <span class="kc">null</span><span class="p">};</span>
+<span class="nx">facile</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="c1">// returns "&lt;p&gt;Hello!&lt;/p&gt;"</span>
+</pre>
+</div>
+
+
+<h3>Setting DOM Attributes</h3>
+
+<p>There are two ways to set DOM attributes on elements using Facile.
+First, if a value in the data object is an object, Facile will treat 
+the keys as attribute names for the matching DOM element. <em>NOTE:</em> 
+the <code>content</code> key is required to trigger this behavior. It is also 
+special in that it updates the content of the element rather than 
+setting a <code>content</code> attribute.</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="s1">'&lt;div id="dog" /&gt;'</span><span class="p">,</span>
+    <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="nx">dog</span><span class="o">:</span> <span class="p">{</span><span class="nx">content</span><span class="o">:</span> <span class="s1">'woof'</span><span class="p">,</span> <span class="s1">'data-age'</span><span class="o">:</span> <span class="mi">3</span><span class="p">}</span> <span class="p">};</span>
+<span class="nx">facile</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="c1">// returns '&lt;div id="dog" data-age="3"&gt;woof&lt;/div&gt;'</span>
+</pre>
+</div>
+
+
+<p>The second way is to name a key in the data object using the convention
+<code>id-or-class@attribute</code>.</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">template</span> <span class="o">=</span> <span class="s1">'&lt;div id="dog" /&gt;'</span><span class="p">,</span>
+    <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span><span class="nx">dog</span><span class="o">:</span> <span class="s1">'woof'</span><span class="p">,</span> <span class="s1">'dog@data-age'</span><span class="o">:</span> <span class="mi">3</span><span class="p">};</span>
+<span class="nx">facile</span><span class="p">(</span><span class="nx">template</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="c1">// returns '&lt;div id="dog" data-age="3"&gt;woof&lt;/div&gt;'</span>
+</pre>
+</div>
+
+
+<h3>Using Facile with Express</h3>
+
+<p>Facile works out of the box as a render engine in the Express framework 
+in Node.js. If you are suffixing your view files with <code>.facile</code> then you
+simply need to add this line to your Express app:</p>
+
+<div class="highlight">
+<pre><span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"view engine"</span><span class="p">,</span> <span class="s2">"facile"</span><span class="p">);</span>
+</pre>
+</div>
+
+
+<p>If you would rather name your view files with a <code>.html</code> suffix, add these
+lines instead:</p>
+
+<div class="highlight">
+<pre><span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"view engine"</span><span class="p">,</span> <span class="s2">"html"</span><span class="p">);</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s2">".html"</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'facile'</span><span class="p">));</span>
+</pre>
+</div>
+
+
+<h2>Running the Tests</h2>
+
+<ol>
+<li>Install <code>node</code> and <code>npm</code>.</li>
+<li>Run <code>npm install</code> to the dependencies</li>
+<li>Run <code>npm test</code> to run the specs in Node.js</li>
+<li>Run <code>./coffee</code> to watch/compile the CoffeeScripts</li>
+<li>Run <code>node test</code> to run Jasmine test server</li>
+<li>Visit <a href="http://localhost:5000">http://localhost:5000</a> to see the tests run in the browser.</li>
+</ol>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/EndangeredMassa" class="avatar"><img src="https://secure.gravatar.com/avatar/caaaf05cd3770dd82548cf3ada462bf9?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png" width="48" height="48"/></a> <a href="https://github.com/EndangeredMassa">EndangeredMassa</a> maintains <a href="https://github.com/EndangeredMassa/facile.js">facile.js</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/EndangeredMassa/facile.js/tarball/master" class="tar">tar</a><a href="https://github.com/EndangeredMassa/facile.js/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
