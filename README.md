@@ -66,8 +66,8 @@ facile(template, data);
 ```
 
 If you are binding an array of data to a `<table>` element, Facile will
-expect there to be a single `<tr>` inside the table's `<tbody>` and
-will repeat that `<tr>` for each item in the array.
+use the content of the table's `<tbody>` as the template for the data object.
+This allows you to setup a `<thead>` without duplicating it.
 
 ```javascript
 var template = '<table id="users">' +
@@ -112,10 +112,11 @@ facile(template, data);
 ### Setting DOM Attributes
 
 There are two ways to set DOM attributes on elements using Facile.
-First, if a value in the data object is an object, Facile will treat
-the keys as attribute names for the matching DOM element. *NOTE:*
-the `content` key is special in that it updates the content of the
-element rather than setting a `content` attribute.
+First, if a value in the data object is an object, Facile will treat 
+the keys as attribute names for the matching DOM element. *NOTE:* 
+the `content` key is required to trigger this behavior. It is also 
+special in that it updates the content of the element rather than 
+setting a `content` attribute.
 
 ```javascript
 var template = '<div id="dog" />',
