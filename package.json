@@ -1,5 +1,5 @@
 {
-  "author": "Sean Massa",
+  "author": "Sean Massa <endangeredmassa@gmail.com> (http://massalabs.com)",
   "name": "facile",
   "description": "Convention-based template engine that depends on jQuery, zepto or cheerio.",
   "version": "0.1.0",
@@ -24,5 +24,7 @@
   },
   "engines": {
     "node": "*"
-  }
+  },
+  "optionalDependencies": {},
+  "homepage": "https://github.com/EndangeredMassa/facile.js"
 }
