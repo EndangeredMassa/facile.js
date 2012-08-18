@@ -5,15 +5,6 @@ find = ($el, key) ->
   $result = $el.find('.' + key) if $result.length == 0
   $result
 
-combineClasses = (existingClasses, newClasses) ->
-  if existingClasses
-    if newClasses.length > 0
-      "#{existingClasses} #{newClasses}"
-    else
-      existingClasses
-  else
-    newClasses
-
 facile = (template, data) ->
   $template = $('<div />').append($(template))
   for key, value of data
@@ -80,7 +71,10 @@ bindValue = ($template, key, value) ->
     if tagName($el) == 'SELECT'
       $el.find("option[value='#{value}']").attr('selected', 'selected')
     else
-      $el.attr(attr, value)
+      if attr == 'class'
+        $el.addClass(value)
+      else
+        $el.attr(attr, value)
   else
     $el = find($template, key)
     if $el.length > 0
@@ -101,7 +95,7 @@ bindAttributeObject = ($template, key, value) ->
   $template.html(value.content)
   for attr, attrValue of value when attr != 'content'
     if attr == 'class'
-      $template.attr('class', combineClasses($template.attr('class'), attrValue))
+      $template.addClass(attrValue)
     else
       $template.attr(attr, attrValue)
 
