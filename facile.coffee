@@ -71,10 +71,7 @@ bindValue = ($template, key, value) ->
     if tagName($el) == 'SELECT'
       $el.find("option[value='#{value}']").attr('selected', 'selected')
     else
-      if attr == 'class'
-        $el.addClass(value)
-      else
-        $el.attr(attr, value)
+      setAttributeValue($el, attr, value)
   else
     $el = find($template, key)
     if $el.length > 0
@@ -94,10 +91,12 @@ bindNestedObject = ($template, key, value) ->
 bindAttributeObject = ($template, key, value) ->
   $template.html(value.content)
   for attr, attrValue of value when attr != 'content'
-    if attr == 'class'
-      $template.addClass(attrValue)
-    else
-      $template.attr(attr, attrValue)
+    setAttributeValue($template, attr, attrValue)
+
+setAttributeValue = ($el, attr, value) ->
+  return $el.addClass(value) if attr == 'class'
+
+  $el.attr(attr, value)
 
 if this.window
   window.facile = facile
