@@ -187,4 +187,10 @@
         result = facile(template, data)
         expect(result).toBe('<div class="dog">woof</div>')
 
+      it 'supports attribute syntax', ->
+        template = '<div class="dog" />'
+        data = {'dog@class': 'cat'}
+        result = facile(template, data)
+        expect(result).toBe('<div class="dog cat"></div>')
+
 ).call(this, this.facile || require("../facile"))
