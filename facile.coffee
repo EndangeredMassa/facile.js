@@ -11,8 +11,8 @@ facile = (template, data) ->
     bindOrRemove($template, key, value)
   $template.html()
 
-# Compile method for using in Express
-facile.compile = (template, options) ->
+# Support Express 2 (compile) and 3 (__express)
+facile.compile = facile.__express = (template, options) ->
   (locals) -> facile(template, locals)
 
 bindOrRemove = ($template, key, value) ->

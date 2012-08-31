@@ -23,7 +23,7 @@
     return $template.html();
   };
 
-  facile.compile = function(template, options) {
+  facile.compile = facile.__express = function(template, options) {
     return function(locals) {
       return facile(template, locals);
     };
