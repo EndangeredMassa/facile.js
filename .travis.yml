@@ -1,11 +1,7 @@
 language: node_js
 
 node_js:
-  - 0.6
+  - 0.8
 
-before_script:
-  - node test &
-  - sleep 1
-
-script: phantomjs run-jasmine.coffee http://localhost:5000
+script: npm test
 
