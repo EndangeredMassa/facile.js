@@ -1,4 +1,9 @@
-((facile) ->
+((_facile) ->
+  $ = @$ || require 'cheerio'
+
+  facile = (template, data) ->
+    _facile(template, data, $)
+
   describe 'facile', ->
     describe 'binds data', ->
       it 'to ids', ->

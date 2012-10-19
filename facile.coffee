@@ -1,19 +1,22 @@
-$ = this.$ || require "cheerio"
+facile = (template, data, domModule) ->
+  @$ = domModule || @$
+  $template = $('<div />').append($(template))
+  startProcessing($template, data)
+
+facile.update = startProcessing = ($template, data) ->
+  for key, value of data
+    bindOrRemove($template, key, value)
+  $template.html()
+
+# Support Express 2
+# TODO: fix cherio issue
+facile.compile = (template, options) ->
+  (locals) -> facile(template, locals)
 
 find = ($el, key) ->
   $result = $el.find('#' + key)
   $result = $el.find('.' + key) if $result.length == 0
   $result
-
-facile = (template, data) ->
-  $template = $('<div />').append($(template))
-  for key, value of data
-    bindOrRemove($template, key, value)
-  $template.html()
-
-# Support Express 2 (compile) and 3 (__express)
-facile.compile = facile.__express = (template, options) ->
-  (locals) -> facile(template, locals)
 
 bindOrRemove = ($template, key, value) ->
   if value?
@@ -98,7 +101,6 @@ setAttributeValue = ($el, attr, value) ->
 
   $el.attr(attr, value)
 
-if this.window
-  window.facile = facile
-else
-  module.exports = facile
+window?.facile = facile
+module?.exports = facile
+
