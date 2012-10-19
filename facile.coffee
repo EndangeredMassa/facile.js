@@ -8,11 +8,6 @@ facile.update = startProcessing = ($template, data) ->
     bindOrRemove($template, key, value)
   $template.html()
 
-# Support Express 2
-# TODO: fix cherio issue
-facile.compile = (template, options) ->
-  (locals) -> facile(template, locals)
-
 find = ($el, key) ->
   $result = $el.find('#' + key)
   $result = $el.find('.' + key) if $result.length == 0
