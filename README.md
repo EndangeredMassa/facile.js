@@ -162,3 +162,7 @@ app.register(".html", require('facile'));
 5. Run `node test` to run Jasmine test server
 6. Visit [http://localhost:5000](http://localhost:5000) to see the tests run in the browser.
 
+license
+===
+
+MIT
