@@ -30,11 +30,12 @@
     "prepublish": "./node_modules/coffee-script/bin/coffee -p -c facile.coffee > index.js"
   },
   "dependencies": {
-    "cheerio": "*",
+    "cheerio": "*"
+  },
+  "devDependencies": {
     "coffee-script": "*",
     "jasmine-node": "~1.0.26"
   },
-  "devDependencies": {},
   "engines": {
     "node": "*"
   },
