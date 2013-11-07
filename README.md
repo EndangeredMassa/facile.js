@@ -135,32 +135,12 @@ facile(template, data);
 // returns '<div id="dog" data-age="3">woof</div>'
 ```
 
-### Using Facile with Express
-
-Facile works out of the box as a render engine in the Express framework 
-in Node.js. If you are suffixing your view files with `.facile` then you
-simply need to add this line to your Express app:
-
-```javascript
-app.set("view engine", "facile");
-```
-
-If you would rather name your view files with a `.html` suffix, add these
-lines instead:
-
-```javascript
-app.set("view engine", "html");
-app.register(".html", require('facile'));
-```
-
 ## Running the Tests
 
-1. Install `node` and `npm`.
-2. Run `npm install` to the dependencies
-3. Run `npm test` to run the specs in Node.js
-4. Run `./coffee` to watch/compile the CoffeeScripts
-5. Run `node test` to run Jasmine test server
-6. Visit [http://localhost:5000](http://localhost:5000) to see the tests run in the browser.
+1. Run `npm test` to run the specs in Node.js
+1. Run `./coffee` to watch/compile the CoffeeScripts
+1. Run `node test` to run Jasmine test server
+1. Visit [http://localhost:5000](http://localhost:5000) to see the tests run in the browser.
 
 license
 ===
