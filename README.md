@@ -3,8 +3,8 @@
 Facile is a convention-based template engine that can be executed
 either in the browser (using jQuery or zepto) or on the server
 (using cheerio). While other template systems like Mustache give the
-developer syntax for explicit conditionals, enumerations and data 
-bindings, Facile uses simple conventions to achieve the same goals 
+developer syntax for explicit conditionals, enumerations and data
+bindings, Facile uses simple conventions to achieve the same goals
 with less code.
 
 ## Installation
@@ -52,7 +52,7 @@ contents for each item in the array.
 ```javascript
 var template = '<ul id="users"><li class="name"></li></ul>',
     data = {users: [
-      {name: "Moe"}, 
+      {name: "Moe"},
       {name: "Larry"},
       {name: "Curly"}
     ]};
@@ -79,7 +79,7 @@ var template = '<table id="users">' +
                '  </tbody>' +
                '</table>',
     data = {users: [
-      {name: "Moe"}, 
+      {name: "Moe"},
       {name: "Larry"},
       {name: "Curly"}
     ]};
@@ -112,10 +112,10 @@ facile(template, data);
 ### Setting DOM Attributes
 
 There are two ways to set DOM attributes on elements using Facile.
-First, if a value in the data object is an object, Facile will treat 
-the keys as attribute names for the matching DOM element. *NOTE:* 
-the `content` key is required to trigger this behavior. It is also 
-special in that it updates the content of the element rather than 
+First, if a value in the data object is an object, Facile will treat
+the keys as attribute names for the matching DOM element. *NOTE:*
+the `content` key is required to trigger this behavior. It is also
+special in that it updates the content of the element rather than
 setting a `content` attribute.
 
 ```javascript
@@ -142,7 +142,7 @@ facile(template, data);
 1. Run `node test` to run Jasmine test server
 1. Visit [http://localhost:5000](http://localhost:5000) to see the tests run in the browser.
 
-license
-===
+## license
 
 MIT
+
