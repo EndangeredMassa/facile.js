@@ -1,3 +1,4 @@
+assert = require 'assertive'
 $ = require 'cheerio'
 _facile = require './facile.coffee'
 
@@ -10,19 +11,19 @@ describe 'facile', ->
       template = '<div id="dog" />'
       data = {dog: 'woof'}
       result = facile(template, data)
-      expect(result).toBe('<div id="dog">woof</div>')
+      assert.equal '<div id="dog">woof</div>', result
 
     it 'even if it is a boolean', ->
       template = '<td class="dog" />'
       data = {dog: true}
       result = facile(template, data)
-      expect(result).toBe('<td class="dog">true</td>')
+      assert.equal '<td class="dog">true</td>', result
 
     it 'to classes if id does not exist', ->
       template = '<div class="dog" />'
       data = {dog: 'woof'}
       result = facile(template, data)
-      expect(result).toBe('<div class="dog">woof</div>')
+      assert.equal '<div class="dog">woof</div>', result
 
     it 'of binding objects', ->
       template = '<div id="orders"><div class="order"><div class="name" /></div></div>'
@@ -33,7 +34,7 @@ describe 'facile', ->
         ]
       result = facile(template, data)
       expectedHtml = '<div id="orders"><div class="order"><div class="name">cool order</div></div><div class="order"><div class="name">lame order</div></div></div>'
-      expect(result).toBe(expectedHtml)
+      assert.equal expectedHtml, result
 
     it 'to tables as rows', ->
       template = '<table class="order"><thead><tr><td>Orders</td></tr></thead><tbody><tr><td class="name" /></tr></tbody></table>'
@@ -44,32 +45,32 @@ describe 'facile', ->
         ]
       result = facile(template, data)
       expectedHtml = '<table class="order"><thead><tr><td>Orders</td></tr></thead><tbody><tr><td class="name">cool order</td></tr><tr><td class="name">lame order</td></tr></tbody></table>'
-      expect(result).toBe(expectedHtml)
+      assert.equal expectedHtml, result
 
   describe 'binds objects', ->
     it 'to ids', ->
       template = '<div id="dog" />'
       data = {dog: {content: 'woof', 'data-age': 3} }
       result = facile(template, data)
-      expect(result).toBe('<div id="dog" data-age="3">woof</div>')
+      assert.equal '<div data-age="3" id="dog">woof</div>', result
 
     it 'to classes', ->
       template = '<div class="dog" />'
       data = {dog: {content: 'woof', 'data-age': 3} }
       result = facile(template, data)
-      expect(result).toBe('<div class="dog" data-age="3">woof</div>')
+      assert.equal '<div data-age="3" class="dog">woof</div>', result
 
     it 'to ids with attribute syntax', ->
       template = '<div id="dog" />'
       data = {dog: 'woof', 'dog@data-age': 3}
       result = facile(template, data)
-      expect(result).toBe('<div id="dog" data-age="3">woof</div>')
+      assert.equal '<div data-age="3" id="dog">woof</div>', result
 
     it 'to classes with attribute syntaxt', ->
       template = '<div class="dog" />'
       data = {dog: 'woof', 'dog@data-age': 3}
       result = facile(template, data)
-      expect(result).toBe('<div class="dog" data-age="3">woof</div>')
+      assert.equal '<div data-age="3" class="dog">woof</div>', result
 
     it 'that are nested', ->
       template = '<div class="order"><div class="name"><div class="place" /></div></div>'
@@ -81,7 +82,7 @@ describe 'facile', ->
         ]
       result = facile(template, data)
       expectedHtml = '<div class="order"><div class="name" place="cool order">over there</div></div>'
-      expect(result).toBe(expectedHtml)
+      assert.equal expectedHtml, result
 
     it 'fills value for input tags by default', ->
       template = '<div class="dog"><input class="name"></div>'
@@ -89,7 +90,7 @@ describe 'facile', ->
         dog: [ name: 'Rex' ]
       result = facile(template, data).replace(/\/>/, ">")
       expectedHtml = '<div class="dog"><input class="name" value="Rex"></div>'
-      expect(result).toBe(expectedHtml)
+      assert.equal expectedHtml, result
 
     it 'selects an option for select tags with a value', ->
       template = '<select class="dog"><option value="Rex Maximus"></option></select>'
@@ -97,7 +98,7 @@ describe 'facile', ->
         'dog@value': 'Rex Maximus'
       result = facile(template, data)
       expectedHtml = '<select class="dog"><option value="Rex Maximus" selected="selected"></option></select>'
-      expect(result).toBe(expectedHtml)
+      assert.equal expectedHtml, result
 
     it 'checks a checkbox given a boolean value', ->
       template = '<div class="dog"><input type="checkbox" class="name"></div>'
@@ -105,7 +106,7 @@ describe 'facile', ->
         dog: [ name: true ]
       result = facile(template, data).replace(/\/>/, ">")
       expectedHtml = '<div class="dog"><input type="checkbox" class="name" checked="checked"></div>'
-      expect(result).toBe(expectedHtml)
+      assert.equal expectedHtml, result
 
     it 'selects an option for select tags if its value is not an object', ->
       template = '<select class="dog"><option value="Rex Maximus"></option></select>'
@@ -113,7 +114,7 @@ describe 'facile', ->
         'dog': 'Rex Maximus'
       result = facile(template, data)
       expectedHtml = '<select class="dog"><option value="Rex Maximus" selected="selected"></option></select>'
-      expect(result).toBe(expectedHtml)
+      assert.equal expectedHtml, result
 
     it 'binds a select tag normally if its value is an object', ->
       template = '<select class="dog"><option class="option"></option></select>'
@@ -124,7 +125,7 @@ describe 'facile', ->
         ]
       result = facile(template, data)
       expectedHtml = '<select class="dog"><option class="option" value="Rex Maximus"></option><option class="option" value="Mr. Monster"></option></select>'
-      expect(result).toBe(expectedHtml)
+      assert.equal expectedHtml, result
 
   describe 'binding arrays', ->
     xit 'binds to class and id'
@@ -137,7 +138,8 @@ describe 'facile', ->
           { speak: 'bark' }
         ]
       result = facile(template, data)
-      expect(result).toBe('<div id="dogs"><div class="dog"><div class="speak">woof</div></div><div class="dog"><div class="speak">bark</div></div></div>')
+      expectedHtml = '<div id="dogs"><div class="dog"><div class="speak">woof</div></div><div class="dog"><div class="speak">bark</div></div></div>'
+      assert.equal expectedHtml, result
 
     it 'of content objects', ->
       template = '<div id="dogs"><div class="dog" /></div>'
@@ -147,20 +149,21 @@ describe 'facile', ->
           {dog: {content: 'bark', 'data-peak': 27}}
         ]
       result = facile(template, data)
-      expect(result).toBe('<div id="dogs"><div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div></div>')
+      expectedHtml = '<div id="dogs"><div data-age="3" class="dog">woof</div><div data-peak="27" class="dog">bark</div></div>'
+      assert.equal expectedHtml, result
 
   describe 'binds nulls', ->
     it 'by removing elements by id', ->
       template = '<div id="dog" />'
       data = {dog: null}
       result = facile(template, data)
-      expect(result).toBe('')
+      assert.equal '', result
 
     it 'by removing elements by class', ->
       template = '<div class="dog" />'
       data = {dog: null}
       result = facile(template, data)
-      expect(result).toBe('')
+      assert.equal '', result
 
     it 'when they are nested', ->
       template = '<div class="order"><div class="name"><div class="place" /></div></div>'
@@ -171,30 +174,30 @@ describe 'facile', ->
         ]
       result = facile(template, data)
       expectedHtml = '<div class="order"><div class="name"></div></div>'
-      expect(result).toBe(expectedHtml)
+      assert.equal expectedHtml, result
 
   describe 'appends classes', ->
     it 'to objects bound via classes', ->
       template = '<div class="dog" />'
       data = {dog: {content: 'woof', 'class': 'spaniel'} }
       result = facile(template, data)
-      expect(result).toBe('<div class="dog spaniel">woof</div>')
+      assert.equal '<div class="dog spaniel">woof</div>', result
 
     it 'to objects bound via ids', ->
       template = '<div id="dog" />'
       data = {dog: {content: 'woof', 'class': 'spaniel'} }
       result = facile(template, data)
-      expect(result).toBe('<div id="dog" class="spaniel">woof</div>')
+      assert.equal '<div id="dog" class="spaniel">woof</div>', result
 
     it 'ignores empty class values', ->
       template = '<div class="dog" />'
       data = {dog: {content: 'woof', 'class': ''} }
       result = facile(template, data)
-      expect(result).toBe('<div class="dog">woof</div>')
+      assert.equal '<div class="dog">woof</div>', result
 
     it 'supports attribute syntax', ->
       template = '<div class="dog" />'
       data = {'dog@class': 'cat'}
       result = facile(template, data)
-      expect(result).toBe('<div class="dog cat"></div>')
+      assert.equal '<div class="dog cat"></div>', result
 
