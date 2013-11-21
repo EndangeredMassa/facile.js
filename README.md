@@ -144,5 +144,5 @@ facile(template, data);
 
 ## license
 
-MIT
+[MIT](LICENSE)
 
