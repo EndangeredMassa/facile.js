@@ -94,11 +94,7 @@ bindAttributeObject = ($template, key, value) ->
 setAttributeValue = ($el, attr, value) ->
   return $el.addClass(value) if attr == 'class'
 
-  if attr.indexOf('data-') == 0
-    dataAttr = attr.substr(5)
-    $el.data(dataAttr, value)
-  else
-    $el.attr(attr, value)
+  $el.attr(attr, value)
 
 window?.facile = facile
 module?.exports = facile

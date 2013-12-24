@@ -52,25 +52,25 @@ describe 'facile', ->
       template = '<div id="dog" />'
       data = {dog: {content: 'woof', 'data-age': 3} }
       result = facile(template, data)
-      assert.equal '<div data-age="3" id="dog">woof</div>', result
+      assert.equal '<div id="dog" data-age="3">woof</div>', result
 
     it 'to classes', ->
       template = '<div class="dog" />'
       data = {dog: {content: 'woof', 'data-age': 3} }
       result = facile(template, data)
-      assert.equal '<div data-age="3" class="dog">woof</div>', result
+      assert.equal '<div class="dog" data-age="3">woof</div>', result
 
     it 'to ids with attribute syntax', ->
       template = '<div id="dog" />'
       data = {dog: 'woof', 'dog@data-age': 3}
       result = facile(template, data)
-      assert.equal '<div data-age="3" id="dog">woof</div>', result
+      assert.equal '<div id="dog" data-age="3">woof</div>', result
 
     it 'to classes with attribute syntaxt', ->
       template = '<div class="dog" />'
       data = {dog: 'woof', 'dog@data-age': 3}
       result = facile(template, data)
-      assert.equal '<div data-age="3" class="dog">woof</div>', result
+      assert.equal '<div class="dog" data-age="3">woof</div>', result
 
     it 'that are nested', ->
       template = '<div class="order"><div class="name"><div class="place" /></div></div>'
@@ -128,8 +128,6 @@ describe 'facile', ->
       assert.equal expectedHtml, result
 
   describe 'binding arrays', ->
-    xit 'binds to class and id'
-
     it 'of binding objects', ->
       template = '<div id="dogs"><div class="dog"><div class="speak" /></div></div>'
       data =
@@ -149,7 +147,7 @@ describe 'facile', ->
           {dog: {content: 'bark', 'data-peak': 27}}
         ]
       result = facile(template, data)
-      expectedHtml = '<div id="dogs"><div data-age="3" class="dog">woof</div><div data-peak="27" class="dog">bark</div></div>'
+      expectedHtml = '<div id="dogs"><div class="dog" data-age="3">woof</div><div class="dog" data-peak="27">bark</div></div>'
       assert.equal expectedHtml, result
 
   describe 'binds nulls', ->
