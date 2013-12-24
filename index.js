@@ -144,16 +144,10 @@
   };
 
   setAttributeValue = function($el, attr, value) {
-    var dataAttr;
     if (attr === 'class') {
       return $el.addClass(value);
     }
-    if (attr.indexOf('data-') === 0) {
-      dataAttr = attr.substr(5);
-      return $el.data(dataAttr, value);
-    } else {
-      return $el.attr(attr, value);
-    }
+    return $el.attr(attr, value);
   };
 
   if (typeof window !== "undefined" && window !== null) {

@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "assertive": "~1.2.0",
-    "mocha": "~1.14.0"
+    "mocha": "~1.16.0"
   },
   "devDependencies": {
     "cheerio": "~0.12.0",
